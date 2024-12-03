@@ -36,17 +36,17 @@ app.post('/uploadsalesforcefile', async (req, res) => {
   try{
     // Get all headers from apex
     const {
-      aws_access_key, aws_secret_key, sf_client_id, sf_client_secret,
-      sf_username, sf_password, aws_file_title, sf_parent_id,
-      aws_folder_key, aws_bucket_name, aws_bucket_region,
-      sf_content_document_id, sf_file_size, sf_file_id, sf_content_document_link_id, sf_namespace, sf_delete_file, sf_create_log, s3_file, aws_kms_key, aws_file_meta_data
+      google_drive_client_id, google_drive_secret_id, google_drive_security_token, sf_client_id, sf_client_secret,
+      sf_username, sf_password, google_drive_file_title, sf_parent_id,
+      google_drive_folder_key, google_drive_bucket_name,
+      sf_content_document_id, sf_file_size, sf_file_id, sf_content_document_link_id, sf_namespace, sf_delete_file, sf_create_log, g_file, google_drive_file_meta_data, google_drive_folder_id
     } = req.body;
 
     // We are sending the request immediately because we cannot wait untill the whole migration is completed. It will timeout the API request in Apex.
     res.send(`Heroku service to migrate Salesforce File has been started successfully.`);
 
     // Get salesforce response
-    const migrateSalesforceResult = migrateSalesforce(sf_file_id, google_drive_access_key, google_drive_secret_key, google_drive_refresh_token, sf_client_id, sf_client_secret, sf_username, sf_password, google_drive_bucket_name, google_drive_folder_key, google_drive_file_title, sf_file_size, sf_content_document_id, sf_parent_id, sf_content_document_link_id, sf_namespace, sf_delete_file, sf_create_log, g_file, google_drive_file_meta_data, google_drive_file_path);
+    const migrateSalesforceResult = migrateSalesforce(sf_file_id, google_drive_client_id, google_drive_secret_id, google_drive_security_token, sf_client_id, sf_client_secret, sf_username, sf_password, google_drive_bucket_name, google_drive_folder_key, google_drive_file_title, sf_file_size, sf_content_document_id, sf_parent_id, sf_content_document_link_id, sf_namespace, sf_delete_file, sf_create_log, g_file, google_drive_file_meta_data, google_drive_folder_id);
 
   } catch(error){
     console.log(error);
