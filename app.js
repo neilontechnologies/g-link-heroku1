@@ -343,10 +343,10 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
     xhr.setRequestHeader('Content-Type', 'text/plain');
 
-    const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'ACCESS TOKEN  '+accessToken + 'INSTANCE URl '+instanceUrl+JSON.stringify(googleDriveFolderPath)+'NAME SPACE-'+sfNamespace+'FILE ID '+sfFileId+ 'link id '+sfContentDocumentLinkId, sfNamespace);
+    //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'ACCESS TOKEN  '+accessToken + 'INSTANCE URl '+instanceUrl+JSON.stringify(googleDriveFolderPath)+'NAME SPACE-'+sfNamespace+'FILE ID '+sfFileId+ 'link id '+sfContentDocumentLinkId, sfNamespace);
     // Handle the response
-    xhr.onload = function() {
-      //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSGAE Onload', sfNamespace);
+    xhr.onreadystatechange = function() {
+      const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSGAE Onload', sfNamespace);
       //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSGAE', sfNamespace);
       if (xhr.readyState === 4) {  
         const response = JSON.parse(xhr.responseText);
