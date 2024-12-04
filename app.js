@@ -345,6 +345,22 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
 
     //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'ACCESS TOKEN  '+accessToken + 'INSTANCE URl '+instanceUrl+JSON.stringify(googleDriveFolderPath)+'NAME SPACE-'+sfNamespace+'FILE ID '+sfFileId+ 'link id '+sfContentDocumentLinkId, sfNamespace);
     // Handle the response
+    xhr.onreadystatechange = function () {
+      const logMessage = `ReadyState: ${xhr.readyState}, Status: ${xhr.status}`;
+      const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, logMessage, sfNamespace);
+    };
+    
+    xhr.onprogress = function (event) {
+      const logMessage = `Loading: ${event.loaded}/${event.total}`;
+      const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, logMessage, sfNamespace);
+    };
+
+    xhr.onloadend = function () {
+      const logMessage = 'Request completed (onloadend triggered).';
+      const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, logMessage, sfNamespace);
+    };
+    
+
     xhr.onload = function() {
       const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(xhr.readyState), sfNamespace);
       if (xhr.readyState === 4) { 
@@ -372,7 +388,7 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     };
 
     xhr.onerror = function(e) {
-      //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSGAE', sfNamespace);
+      const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSGAE', sfNamespace);
       // Prepare failure rason with error message of API
       const failureReason = 'Your request to create G-Folder for the record failed. ERROR: ' + e;
 
