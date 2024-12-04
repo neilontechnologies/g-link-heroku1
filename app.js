@@ -160,27 +160,27 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
       const googleDriveFilePath = googleDriveFolderKey + '/' + googleDriveFileTitle
       console.log('FILE PATH', googleDriveFilePath);
       // Create google drive folder using google drive folder path
-      const {createGoogleDriveFolderResult} = await createGoogleDriveFolder(salesforceAccessToken, instanceUrl, googleDriveFolderPath, sfFileId, sfContentDocumentLinkId, sfNamespace, sfCreateLog);
+      const {createGoogleDriveFolderResult1} = await createGoogleDriveFolder(salesforceAccessToken, instanceUrl, googleDriveFolderPath, sfFileId, sfContentDocumentLinkId, sfNamespace, sfCreateLog);
 
-      
+      const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST DATA', sfNamespace);
       // Check folder is created or not
-      if(createGoogleDriveFolderResult != null && createGoogleDriveFolderResult.code == 200 && createGoogleDriveFolderResult.data != null){
+      // if(createGoogleDriveFolderResult1 != null && createGoogleDriveFolderResult1.code == 200 && createGoogleDriveFolderResult1.data != null){
 
-        // Get google drive folder id
-        const googleDriveFolderId = createGoogleDriveFolderResult.data.split('/')[2];
+      //   // Get google drive folder id
+      //   const googleDriveFolderId = createGoogleDriveFolderResult1.data.split('/')[2];
 
-        // Upload file into google drive 
-        const response = await uploadFileToGoogleDrive(googleDriveAccessToken, getSalesforceFileResult, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata);
+      //   // Upload file into google drive 
+      //   const response = await uploadFileToGoogleDrive(googleDriveAccessToken, getSalesforceFileResult, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata);
 
-        if(response.status == 200){
-          if(response && response.data && response.data.id){
-            const googleDriveFileId = response.data.id;
+      //   if(response.status == 200){
+      //     if(response && response.data && response.data.id){
+      //       const googleDriveFileId = response.data.id;
 
-            // Create g file record if file is successfully uploaded into google drive
-            const createGFilesInSalesforceResult = await createGFilesInSalesforce(salesforceAccessToken, instanceUrl, googleDriveBucketName, googleDriveFilePath, sfFileSize, sfContentDocumentId, sfFileId, sfContentDocumentLinkId, sfNamespace, sfDeleteFile, sfCreateLog, gFile, googleDriveFileId);
-          }
-        }
-      }
+      //       // Create g file record if file is successfully uploaded into google drive
+      //       const createGFilesInSalesforceResult = await createGFilesInSalesforce(salesforceAccessToken, instanceUrl, googleDriveBucketName, googleDriveFilePath, sfFileSize, sfContentDocumentId, sfFileId, sfContentDocumentLinkId, sfNamespace, sfDeleteFile, sfCreateLog, gFile, googleDriveFileId);
+      //     }
+      //   }
+      // }
     }
   } else {
     if(sfCreateLog){
@@ -350,10 +350,10 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
         const response = JSON.parse(xhr.responseText);
         console.log(response);
         if (xhr.status === 200) {
-          const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, response, sfNamespace);
-          // resolve({
-          //   createGoogleDriveFolderResult: response
-          // }); 
+          const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId,'RESPONSE DATA', sfNamespace);
+          resolve({
+            createGoogleDriveFolderResult1: response
+          }); 
         }
       }
     };
