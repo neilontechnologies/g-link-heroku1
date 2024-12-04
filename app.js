@@ -127,7 +127,7 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
           if(createGoogleDriveFolderResult != null && createGoogleDriveFolderResult.code == 200 && createGoogleDriveFolderResult.data != null){
 
             // Get google drive folder id
-            const googleDriveFolderId = createGoogleDriveFolderResult.data.split('/')[2];
+            const googleDriveFolderId = createGoogleDriveFolderResult.data.split('/')[2];// get last / id
 
             console.log('GOOGLE DRIVE FOLDER ID', googleDriveFolderId);
             // Upload file into google drive  
@@ -345,49 +345,10 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
 
     //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'ACCESS TOKEN  '+accessToken + 'INSTANCE URl '+instanceUrl+JSON.stringify(googleDriveFolderPath)+'NAME SPACE-'+sfNamespace+'FILE ID '+sfFileId+ 'link id '+sfContentDocumentLinkId, sfNamespace);
     // Handle the response
-    xhr.onreadystatechange = function () {
-      const logMessage = `ReadyState: ${xhr.readyState}, Status: ${xhr.status}`;
-      const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, logMessage, sfNamespace);
-    };
-    
-    xhr.onprogress = function (event) {
-      const logMessage = `Loading: ${event.loaded}/${event.total}`;
-      const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, logMessage, sfNamespace);
-    };
-
-    xhr.onloadend = function () {
-      const logMessage = 'Request completed (onloadend triggered).';
-      const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, logMessage, sfNamespace);
-    };
-
-    xhr.onprogress = function (event) {
-      let logMessage;
-    
-      if (event.lengthComputable) {
-        logMessage = `Progress: Received ${event.loaded} of ${event.total} bytes.`;
-        console.log(logMessage);
-      } else {
-        logMessage = `Progress: Received ${event.loaded} bytes (total size unknown).`;
-        console.log(logMessage);
-      }
-    
-      // Call createFileMigrationLog with the prepared logMessage
-      const createFileMigrationLogResult = createFileMigrationLog(
-        accessToken, 
-        instanceUrl, 
-        sfFileId, 
-        sfContentDocumentLinkId, 
-        logMessage, 
-        sfNamespace
-      );
-    };
-    
-    
-
     xhr.onload = function() {
-      const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(xhr.readyState), sfNamespace);
+      //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(xhr.readyState), sfNamespace);
       if (xhr.readyState === 4) { 
-        const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, xhr.responseText, sfNamespace);
+        //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, xhr.responseText, sfNamespace);
         const response = JSON.parse(xhr.responseText);
         console.log(response);
         console.log('abc'+xhr.status);
@@ -589,8 +550,8 @@ app.get('/', async (req, res) => {
       const googleDriveBucketName = 'glink-test-org';
       const sfFileSize = 746858;
       const sfContentDocumentId = '069Dn00000EqCgKIAV';
-      const googleDriveFolderKey = 'Accounts/Test Account 1';
-      const googleDriveFileTitle = 'S123#.pdf';
+      const googleDriveFolderKey = null;//'Accounts/Test Account 1';
+      const googleDriveFileTitle = 'S1234#.pdf';
       const sfParentId = '001Dn00001B2NpwIAF';
       const sfContentDocumentLinkId = '06ADn00000O2NI7MAN';
       const sfNamespace = '';
