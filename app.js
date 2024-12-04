@@ -132,8 +132,9 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
             // // Upload file into google drive 
             //const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'salesforceAccessToken-- '+salesforceAccessToken+ ' URL-- '+instanceUrl+' FILE ID-- '+sfFileId+' Lined id '+sfContentDocumentLinkId, sfNamespace);
  
-            const response = await uploadFileToGoogleDrive(googleDriveAccessToken, getSalesforceFileResult, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata);
+           // const response = await uploadFileToGoogleDrive(googleDriveAccessToken, getSalesforceFileResult, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata);
 
+           const createFileMigrationLogResult =  createFileMigrationLog('00DDn000003ouaT!AQoAQIJQYj5VolJSTr5KCtklDspWqqidQopVpxfhW5Nqdd9evSiuYgYOjNnU8cPdhSCJv0kamd7OXldzJKV9dLEPF0MB5YK2', 'https://glinkdev-2-dev-ed.develop.my.salesforce.com', '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', 'TEST', '');
 
             // if(response.status == 200){
             //   if(response && response.data && response.data.id){
