@@ -128,11 +128,11 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
             // Get google drive folder id
             const googleDriveFolderId = createGoogleDriveFolderResult1.data.split('/')[2];// get last / id
 
-            const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, googleDriveFolderId, sfNamespace);
-
             // console.log('GOOGLE DRIVE FOLDER ID', googleDriveFolderId);
             // // Upload file into google drive  
             const response = await uploadFileToGoogleDrive(googleDriveAccessToken, getSalesforceFileResult, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata);
+
+            const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, googleDriveFolderId, sfNamespace);
 
             // const createFileMigrationLogResult1 =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, , sfNamespace);
             // if(response.status == 200){
