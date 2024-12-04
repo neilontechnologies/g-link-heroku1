@@ -124,24 +124,25 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
           const {createGoogleDriveFolderResult1} = await createGoogleDriveFolder(salesforceAccessToken, instanceUrl, googleDriveFolderPath, sfFileId, sfContentDocumentLinkId, sfNamespace, sfCreateLog);
 
           if(createGoogleDriveFolderResult1 != null && createGoogleDriveFolderResult1.code == 200 && createGoogleDriveFolderResult1.data != null){
-            const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, , sfNamespace);
+
             // Get google drive folder id
             const googleDriveFolderId = createGoogleDriveFolderResult1.data.split('/')[2];// get last / id
 
+            const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, googleDriveFolderId, sfNamespace);
 
-            console.log('GOOGLE DRIVE FOLDER ID', googleDriveFolderId);
-            // Upload file into google drive  
-            const response = await uploadFileToGoogleDrive(googleDriveAccessToken, getSalesforceFileResult, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata);
+            // console.log('GOOGLE DRIVE FOLDER ID', googleDriveFolderId);
+            // // Upload file into google drive  
+            // const response = await uploadFileToGoogleDrive(googleDriveAccessToken, getSalesforceFileResult, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata);
 
-            const createFileMigrationLogResult1 =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, response.status, sfNamespace);
-            if(response.status == 200){
-              if(response && response.data && response.data.id){
-                const googleDriveFileId = response.data.id;
+            // const createFileMigrationLogResult1 =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, , sfNamespace);
+            // if(response.status == 200){
+            //   if(response && response.data && response.data.id){
+            //     const googleDriveFileId = response.data.id;
 
-                // Create g file record if file is successfully uploaded into google drive
-                //const createGFilesInSalesforceResult = await createGFilesInSalesforce(salesforceAccessToken, instanceUrl, googleDriveBucketName, googleDriveFilePath, sfFileSize, sfContentDocumentId, sfFileId, sfContentDocumentLinkId, sfNamespace, sfDeleteFile, sfCreateLog, gFile, googleDriveFileId);
-              }
-            }
+            //     // Create g file record if file is successfully uploaded into google drive
+            //     //const createGFilesInSalesforceResult = await createGFilesInSalesforce(salesforceAccessToken, instanceUrl, googleDriveBucketName, googleDriveFilePath, sfFileSize, sfContentDocumentId, sfFileId, sfContentDocumentLinkId, sfNamespace, sfDeleteFile, sfCreateLog, gFile, googleDriveFileId);
+            //   }
+            // }
           }
         }
       } else{
