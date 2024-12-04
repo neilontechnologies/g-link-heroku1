@@ -324,8 +324,8 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     let url;
     const xhr = new XMLHttpRequest();
 
-    const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(googleDriveFolderPath), sfNamespace);
-    console.log(instanceUrl);
+    console.log('FOLDE PATH', googleDriveFolderPath);
+    //console.log(instanceUrl);
     //Check namespace is available or not
     if(sfNamespace != ''){
       url = `${instanceUrl}/services/apexrest/NEILON/GLink/v1/creategoogledrivefolders/`;
@@ -348,6 +348,7 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
         console.log(response);
         console.log('abc'+xhr.status);
         if (xhr.status === 200) {
+          const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(response), sfNamespace);
           resolve({
             createGoogleDriveFolderResult: response
           });  // Resolve the Promise on success
