@@ -202,7 +202,7 @@ const getSalesforceToken = (sfClientId, sfClientSecret, sfUsername, sfPassword) 
     xhr.open('POST', 'https://login.salesforce.com/services/oauth2/token', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-    xhr.onload = function(){
+    xhr.onreadystatechange = function(){
       if(xhr.readyState === 4){
         const response = JSON.parse(xhr.responseText);
         if(xhr.status === 200){
