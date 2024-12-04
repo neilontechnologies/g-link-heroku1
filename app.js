@@ -346,12 +346,11 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'ACCESS TOKEN  '+accessToken + 'INSTANCE URl '+instanceUrl+JSON.stringify(googleDriveFolderPath)+'NAME SPACE-'+sfNamespace+'FILE ID '+sfFileId+ 'link id '+sfContentDocumentLinkId, sfNamespace);
     // Handle the response
     xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4) { 
-        const createFileMigrationLogResult1 =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSGAE Onload 11', sfNamespace); 
+      const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSGAE Onload', sfNamespace);
+      if (xhr.readyState === 4) {  
         const response = JSON.parse(xhr.responseText);
         console.log(response);
         console.log('abc'+xhr.status);
-        const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSGAE Onload', sfNamespace);
         if (xhr.status === 200) {
           resolve({
             createGoogleDriveFolderResult: response
