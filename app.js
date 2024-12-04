@@ -344,11 +344,16 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     xhr.setRequestHeader('Content-Type', 'text/plain');
     
     xhr.onload = function() {
-      const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'ACCESS TOKEN', sfNamespace);
       if (xhr.readyState === 4) {
+        const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, xhr.responseText, sfNamespace);
+        const response = JSON.parse(xhr.responseText);
+        console.log(response);
+        if (xhr.status === 200) {
+          //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, response, sfNamespace);
+        }
       }
     };
-    
+
     // Send the request with the JSON body
     xhr.send(textBody);
   });
