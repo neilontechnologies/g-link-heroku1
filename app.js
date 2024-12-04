@@ -345,10 +345,10 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     xhr.onload = function() {
       if (xhr.readyState === 4) {  
         const response = JSON.parse(xhr.responseText);
+        const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(response), sfNamespace);
         console.log(response);
         console.log('abc'+xhr.status);
         if (xhr.status === 200) {
-          const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(response), sfNamespace);
           resolve({
             createGoogleDriveFolderResult: response
           });  // Resolve the Promise on success
