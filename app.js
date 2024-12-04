@@ -352,9 +352,9 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
         const response = JSON.parse(xhr.responseText);
         console.log(response);
         console.log('abc'+xhr.status);
-        //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(response), sfNamespace);
+        const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, xhr.responseText, sfNamespace);
         if (xhr.status === 200) {
-          const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSGAE Onload 12', sfNamespace); 
+          //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSGAE Onload 12', sfNamespace); 
           resolve({
             createGoogleDriveFolderResult: response
           });  // Resolve the Promise on success
