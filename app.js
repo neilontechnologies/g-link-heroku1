@@ -130,9 +130,9 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
 
             // console.log('GOOGLE DRIVE FOLDER ID', googleDriveFolderId);
             // // Upload file into google drive 
-            const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'salesforceAccessToken-- '+salesforceAccessToken+ ' URL-- '+instanceUrl+' FILE ID-- '+sfFileId+' Lined id '+sfContentDocumentLinkId, sfNamespace);
+            //const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'salesforceAccessToken-- '+salesforceAccessToken+ ' URL-- '+instanceUrl+' FILE ID-- '+sfFileId+' Lined id '+sfContentDocumentLinkId, sfNamespace);
  
-            //const response = await uploadFileToGoogleDrive(googleDriveAccessToken, getSalesforceFileResult, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata);
+            const response = await uploadFileToGoogleDrive(googleDriveAccessToken, getSalesforceFileResult, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata);
 
 
             // if(response.status == 200){
@@ -568,8 +568,8 @@ function createOAuthClient(clientId, clientSecret, refreshToken) {
 // A Function that will upload the desired file to google drive folder
 async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata) {
   return new Promise((resolve, reject) => {
+    const createFileMigrationLogResult =  createFileMigrationLog('00DDn000003ouaT!AQoAQIJQYj5VolJSTr5KCtklDspWqqidQopVpxfhW5Nqdd9evSiuYgYOjNnU8cPdhSCJv0kamd7OXldzJKV9dLEPF0MB5YK2', 'https://glinkdev-2-dev-ed.develop.my.salesforce.com', '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', 'TEST', '');
     //const failureReason = 'Your request to upload file in Google Drive has failed' + googleDriveFolderId + '__' + googleDriveFileTitle;
-    //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
     const drive = google.drive({ version: 'v3', auth: authClient });
 
     // Get meta tags
