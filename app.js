@@ -162,6 +162,7 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
       // Create google drive folder using google drive folder path
       const {createGoogleDriveFolderResult} = await createGoogleDriveFolder(salesforceAccessToken, instanceUrl, googleDriveFolderPath, sfFileId, sfContentDocumentLinkId, sfNamespace, sfCreateLog);
 
+      
       // Check folder is created or not
       if(createGoogleDriveFolderResult != null && createGoogleDriveFolderResult.code == 200 && createGoogleDriveFolderResult.data != null){
 
@@ -349,6 +350,9 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
         const response = JSON.parse(xhr.responseText);
         console.log(response);
         if (xhr.status === 200) {
+          resolve({
+            createGoogleDriveFolderResult: response
+          }); 
           //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, response, sfNamespace);
         }
       }
