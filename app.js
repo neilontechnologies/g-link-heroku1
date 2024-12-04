@@ -346,14 +346,14 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     
     xhr.onload = function() {
       if (xhr.readyState === 4) {
-        const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, xhr.responseText, sfNamespace);
+        //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, xhr.responseText, sfNamespace);
         const response = JSON.parse(xhr.responseText);
         console.log(response);
         if (xhr.status === 200) {
-          resolve({
-            createGoogleDriveFolderResult: response
-          }); 
-          //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, response, sfNamespace);
+          const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, response, sfNamespace);
+          // resolve({
+          //   createGoogleDriveFolderResult: response
+          // }); 
         }
       }
     };
