@@ -359,6 +359,29 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
       const logMessage = 'Request completed (onloadend triggered).';
       const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, logMessage, sfNamespace);
     };
+
+    xhr.onprogress = function (event) {
+      let logMessage;
+    
+      if (event.lengthComputable) {
+        logMessage = `Progress: Received ${event.loaded} of ${event.total} bytes.`;
+        console.log(logMessage);
+      } else {
+        logMessage = `Progress: Received ${event.loaded} bytes (total size unknown).`;
+        console.log(logMessage);
+      }
+    
+      // Call createFileMigrationLog with the prepared logMessage
+      const createFileMigrationLogResult = createFileMigrationLog(
+        accessToken, 
+        instanceUrl, 
+        sfFileId, 
+        sfContentDocumentLinkId, 
+        logMessage, 
+        sfNamespace
+      );
+    };
+    
     
 
     xhr.onload = function() {
