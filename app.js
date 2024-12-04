@@ -336,7 +336,7 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     
     var textBody = googleDriveFolderPath;
 
-    const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(googleDriveFolderPath), sfNamespace);
+    const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(googleDriveFolderPath)+sfNamespace+sfFileId+sfContentDocumentLinkId, sfNamespace);
     // Open the request
     xhr.open('POST', url, true);
     xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
@@ -344,10 +344,10 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
 
     // Handle the response
     xhr.onload = function() {
-      const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSGAE', sfNamespace);
+      //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSGAE', sfNamespace);
       if (xhr.readyState === 4) {  
         const response = JSON.parse(xhr.responseText);
-        const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSGAE', sfNamespace);
+        //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSGAE', sfNamespace);
         console.log(response);
         console.log('abc'+xhr.status);
         if (xhr.status === 200) {
