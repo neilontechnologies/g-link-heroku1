@@ -343,9 +343,10 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
     xhr.setRequestHeader('Content-Type', 'text/plain');
 
+    const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSGAE Onload', sfNamespace);
     // Handle the response
     xhr.onload = function() {
-      
+      //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSGAE Onload', sfNamespace);
       //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSGAE', sfNamespace);
       if (xhr.readyState === 4) {  
         const response = JSON.parse(xhr.responseText);
@@ -370,7 +371,7 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     };
 
     xhr.onerror = function(e) {
-      const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSGAE', sfNamespace);
+      //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSGAE', sfNamespace);
       // Prepare failure rason with error message of API
       const failureReason = 'Your request to create G-Folder for the record failed. ERROR: ' + e;
 
