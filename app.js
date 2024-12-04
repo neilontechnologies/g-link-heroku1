@@ -336,7 +336,7 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     
     var textBody = googleDriveFolderPath;
 
-    //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(response), sfNamespace);
+    const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(googleDriveFolderPath), sfNamespace);
     // Open the request
     xhr.open('POST', url, true);
     xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
