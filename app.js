@@ -324,7 +324,7 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     let url;
     const xhr = new XMLHttpRequest();
 
-    const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSAGE', sfNamespace);
+    const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(googleDriveFolderPath), sfNamespace);
     console.log(instanceUrl);
     //Check namespace is available or not
     if(sfNamespace != ''){
