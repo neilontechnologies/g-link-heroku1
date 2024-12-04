@@ -130,7 +130,7 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
 
             // console.log('GOOGLE DRIVE FOLDER ID', googleDriveFolderId);
             // // Upload file into google drive  
-            const response = await uploadFileToGoogleDrive(googleDriveAccessToken, getSalesforceFileResult, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata);
+            //const response = await uploadFileToGoogleDrive(googleDriveAccessToken, getSalesforceFileResult, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata);
 
             const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, googleDriveFolderId, sfNamespace);
 
@@ -599,6 +599,7 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
       properties: fileMetaTags
     };
 
+    // Create log
     console.log('S3 FILE', gFile[sfNamespace + 'Content_Type__c']);
     const bufferStream = new Readable();
     bufferStream.push(buffer);
