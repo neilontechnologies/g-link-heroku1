@@ -336,7 +336,7 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     
     var textBody = googleDriveFolderPath;
 
-    const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'ACCESS TOKEN  '+accessToken + 'INSTANCE URl '+instanceUrl+JSON.stringify(googleDriveFolderPath)+'NAME SPACE-'+sfNamespace+'FILE ID '+sfFileId+ 'link id '+sfContentDocumentLinkId, sfNamespace);
+    //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'ACCESS TOKEN  '+accessToken + 'INSTANCE URl '+instanceUrl+JSON.stringify(googleDriveFolderPath)+'NAME SPACE-'+sfNamespace+'FILE ID '+sfFileId+ 'link id '+sfContentDocumentLinkId, sfNamespace);
     console.log('RESULTT POST', 'ACCESS TOKEN  '+accessToken + 'INSTANCE URl '+instanceUrl+JSON.stringify(googleDriveFolderPath)+'NAME SPACE-'+sfNamespace+'FILE ID '+sfFileId+ 'link id '+sfContentDocumentLinkId)
     // Open the request
     xhr.open('POST', url, true);
@@ -345,6 +345,7 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
 
     // Handle the response
     xhr.onload = function() {
+      
       //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSGAE', sfNamespace);
       if (xhr.readyState === 4) {  
         const response = JSON.parse(xhr.responseText);
@@ -369,6 +370,7 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     };
 
     xhr.onerror = function(e) {
+      const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST MESSGAE', sfNamespace);
       // Prepare failure rason with error message of API
       const failureReason = 'Your request to create G-Folder for the record failed. ERROR: ' + e;
 
