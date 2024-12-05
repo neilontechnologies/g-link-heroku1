@@ -139,15 +139,15 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
           const metatype = 'google';
 
           // Prepare google drive metadata map
-          Object.entries(googleDriveFileMetadata).forEach(([filedAPIName, value]) => {
-            var fieldAPI = filedAPIName;
-            var metaFieldAPI = 'x-' + metatype + '-meta-' + fieldAPI.toLowerCase();
-            if (googleDriveFileMetadata[fieldAPI] !== undefined && googleDriveFileMetadata[fieldAPI] !== null) {
-              fileMetaTags[metaFieldAPI] = googleDriveFileMetadata[fieldAPI].toString();
-          } else {
-              fileMetaTags[metaFieldAPI] = '';
-          }
-        });
+        //   Object.entries(googleDriveFileMetadata).forEach(([filedAPIName, value]) => {
+        //     var fieldAPI = filedAPIName;
+        //     var metaFieldAPI = 'x-' + metatype + '-meta-' + fieldAPI.toLowerCase();
+        //     if (googleDriveFileMetadata[fieldAPI] !== undefined && googleDriveFileMetadata[fieldAPI] !== null) {
+        //       fileMetaTags[metaFieldAPI] = googleDriveFileMetadata[fieldAPI].toString();
+        //   } else {
+        //       fileMetaTags[metaFieldAPI] = '';
+        //   }
+        // });
 
         const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(fileMetaTags), sfNamespace);
  
