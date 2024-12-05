@@ -600,10 +600,10 @@ function createOAuthClient(clientId, clientSecret, refreshToken) {
 // A Function that will upload the desired file to google drive folder
 async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata) {
   return new Promise((resolve, reject) => {
-    const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', 'TEST', '');
     //const failureReason = 'Your request to upload file in Google Drive has failed' + googleDriveFolderId + '__' + googleDriveFileTitle;
-   /* const drive = google.drive({ version: 'v3', auth: authClient });
+   const drive = google.drive({ version: 'v3', auth: authClient });
 
+   const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', 'TEST', '');
     // Get meta tags
     var fileMetaTags = {};
       const metatype = 'google';
@@ -622,7 +622,7 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
     console.log('FILE DATA', fileMetaTags);
 
     // Prepare metadata to store in google drive file
-    const googleDriveFolderIds = [];
+    /*const googleDriveFolderIds = [];
     googleDriveFolderIds.push(googleDriveFolderId);
     const fileMetaData = {
       name: googleDriveFileTitle,
