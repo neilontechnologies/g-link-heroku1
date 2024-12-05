@@ -148,6 +148,16 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
                 fileMetaTags[metaFieldAPI] = '';
             }
           });
+
+              // Prepare metadata to store in google drive file
+            const googleDriveFolderIds = [];
+            googleDriveFolderIds.push(googleDriveFolderId);
+            const fileMetaData = {
+              name: googleDriveFileTitle,
+              parents: googleDriveFolderIds, 
+              mimeType: gFile[sfNamespace + 'Content_Type__c'],
+              properties: fileMetaTags
+            };
           const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
 
           //const createFileMigrationLogResult =  createFileMigrationLog('00DDn000003ouaT!AQoAQIJQYj5VolJSTr5KCtklDspWqqidQopVpxfhW5Nqdd9evSiuYgYOjNnU8cPdhSCJv0kamd7OXldzJKV9dLEPF0MB5YK2', 'https://glinkdev-2-dev-ed.develop.my.salesforce.com', '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', JSON.stringify(googleDriveAccessToken), '');
