@@ -361,18 +361,24 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     
     xhr.onload = function() {
       if (xhr.readyState === 4) {
-        //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, xhr.responseText, sfNamespace);
         const response = JSON.parse(xhr.responseText);
         console.log(response);
         if (xhr.status === 200) {
-          //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId,'RESPONSE DATA', sfNamespace);
           resolve({
             createGoogleDriveFolderResult1: response
-          }); 
+          });  // Resolve the Promise on success
+        }  else {
+          // Prepare failure rason with error message of API
+          const failureReason = 'Your request to create G-Folder for the record failed. ERROR: ' + response[0].message;
+
+          if(sfCreateLog){
+            // Create File Migration Logs
+            const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
+          }
+          reject(new Error(failureReason));
         }
       }
     };
-
     // Send the request with the JSON body
     xhr.send(textBody);
   });
