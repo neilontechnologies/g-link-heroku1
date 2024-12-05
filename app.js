@@ -358,18 +358,19 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
       if (xhr.readyState === 4) {
         const response = JSON.parse(xhr.responseText);
         console.log(response);
-        if (xhr.status === 200) {
-          const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
+        if (xhr.status === 200 && response.status !== 'BAD_REQUEST') {
           resolve({
             createGoogleDriveFolderResult1: response
           });  // Resolve the Promise on success
         }  else {
+
+          const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
           // Prepare failure rason with error message of API
           const failureReason = 'Your request to create G-Folder for the record failed. ERROR: ' + response[0].message;
 
           if(sfCreateLog){
             // Create File Migration Logs
-            const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
+            //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
           }
           reject(new Error(failureReason));
         }
