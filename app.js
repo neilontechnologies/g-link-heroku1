@@ -354,81 +354,28 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
     xhr.setRequestHeader('Content-Type', 'text/plain');
     
-    // xhr.onload = function() {
-    //   if (xhr.readyState === 4) {
-    //     const response = JSON.parse(xhr.responseText);
-    //     console.log('RESPONSE__', response);
-    //     console.log('Status', xhr.status)
-    //     if (xhr.status === 200) {
-    //       resolve({
-    //         createGoogleDriveFolderResult1: response
-    //       });  // Resolve the Promise on success
-    //     } else {
-    //       console.log('ELSE PORTION');
-    //       // Prepare failure rason with error message of API
-    //       const failureReason = 'Your request to create G-Folder for the record failed. ERROR: ' + response[0].message;
-
-    //       if(sfCreateLog){
-    //         // Create File Migration Logs
-    //         const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
-    //       }
-    //       reject(new Error(failureReason));
-    //     }
-    //   }
-    // };
-    xhr.onload = function () {
+    xhr.onload = function() {
       if (xhr.readyState === 4) {
         const response = JSON.parse(xhr.responseText);
-        console.log('RESPONSE__', response);
-        console.log('Status', xhr.status);
-    
-        // Check both HTTP status and response status
-        if (xhr.status === 200 && response.status !== 'BAD_REQUEST') {
+        console.log(response);
+        if (xhr.status === 200) {
+          const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
           resolve({
             createGoogleDriveFolderResult1: response
-          }); // Resolve the Promise on success
-        } else {
-          const createFileMigrationLogResult = createFileMigrationLog(
-            accessToken,
-            instanceUrl,
-            sfFileId,
-            sfContentDocumentLinkId,
-            'Test',
-            sfNamespace
-          );
-          console.log('ELSE PORTION');
-          // Prepare failure reason with error message from the API
-          // const failureReason = 'Your request to create G-Folder for the record failed. ERROR: ' + (response.message || 'Unknown error');
-    
-          // if (sfCreateLog) {
-          //   // Create File Migration Logs
-          //   const createFileMigrationLogResult = createFileMigrationLog(
-          //     accessToken,
-          //     instanceUrl,
-          //     sfFileId,
-          //     sfContentDocumentLinkId,
-          //     failureReason,
-          //     sfNamespace
-          //   );
-          // }
+          });  // Resolve the Promise on success
+        }  else {
+          // Prepare failure rason with error message of API
+          const failureReason = 'Your request to create G-Folder for the record failed. ERROR: ' + response[0].message;
+
+          if(sfCreateLog){
+            // Create File Migration Logs
+            const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
+          }
           reject(new Error(failureReason));
         }
       }
     };
     
-    xhr.onerror = function(e) {
-      // Prepare failure rason with error message of API
-      const failureReason = 'Your request to create G-Folder for the record failed. ERROR: ' + e;
-
-      // Check sf create log is true or false
-      if(sfCreateLog){
-        // Create File Migration Logs
-        const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
-      }
-
-      // Handle network error
-      reject(new Error(failureReason));
-    };
     // Send the request with the JSON body
     xhr.send(textBody);
   });
