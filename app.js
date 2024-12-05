@@ -618,11 +618,10 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
       }
     });
 
-    const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', 'LONGSS', '');
     console.log('FILE DATA', fileMetaTags);
 
     // Prepare metadata to store in google drive file
-    /*const googleDriveFolderIds = [];
+    const googleDriveFolderIds = [];
     googleDriveFolderIds.push(googleDriveFolderId);
     const fileMetaData = {
       name: googleDriveFileTitle,
@@ -631,8 +630,9 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
       properties: fileMetaTags
     };
 
+    const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', JSON.stringify(googleDriveFolderIds), '');
     // Create log
-    console.log('S3 FILE', gFile[sfNamespace + 'Content_Type__c']);
+    /*console.log('S3 FILE', gFile[sfNamespace + 'Content_Type__c']);
     const bufferStream = new Readable();
     bufferStream.push(buffer);
     bufferStream.push(null); 
