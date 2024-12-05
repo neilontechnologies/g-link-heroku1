@@ -149,7 +149,7 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
             }
           });
 
-          const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, googleDriveFolderId + '_' + googleDriveFileTitle+ '_'+ gFile[sfNamespace + 'Content_Type__c'], sfNamespace);
+          const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(googleDriveFolderId), sfNamespace);
 
               // Prepare metadata to store in google drive file
             // const googleDriveFolderIds = [];
