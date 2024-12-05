@@ -374,6 +374,20 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
         }
       }
     };
+
+    xhr.onerror = function(e) {
+      // Prepare failure rason with error message of API
+      const failureReason = 'Your request to create G-Folder for the record failed. ERROR: ' + e;
+
+      // Check sf create log is true or false
+      if(sfCreateLog){
+        // Create File Migration Logs
+        const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
+      }
+
+      // Handle network error
+      reject(new Error(failureReason));
+    };
     // Send the request with the JSON body
     xhr.send(textBody);
   });
