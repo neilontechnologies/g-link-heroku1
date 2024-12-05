@@ -620,6 +620,7 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
 
     console.log('FILE DATA', fileMetaTags);
 
+    const createFileMigrationLogResultq =  createFileMigrationLog(accessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', JSON.stringify(googleDriveFolderIds), '');
     // Prepare metadata to store in google drive file
     const googleDriveFolderIds = [];
     googleDriveFolderIds.push(googleDriveFolderId);
