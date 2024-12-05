@@ -630,7 +630,7 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
   //     //mimeType: gFile[sfNamespace + 'Content_Type__c'],
   //     //properties: fileMetaTags
   //   };
-    const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', gFile[sfNamespace + 'Content_Type__c'], '');
+    const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN',JSON.stringify(gFile), '');
 
 
     // Create log
