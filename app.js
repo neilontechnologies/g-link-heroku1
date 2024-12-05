@@ -603,7 +603,6 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
     //const failureReason = 'Your request to upload file in Google Drive has failed' + googleDriveFolderId + '__' + googleDriveFileTitle;
    const drive = google.drive({ version: 'v3', auth: authClient });
 
-   const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', 'TEST', '');
     // Get meta tags
     var fileMetaTags = {};
       const metatype = 'google';
@@ -619,6 +618,7 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
       }
     });
 
+    const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', 'LONGSS', '');
     console.log('FILE DATA', fileMetaTags);
 
     // Prepare metadata to store in google drive file
