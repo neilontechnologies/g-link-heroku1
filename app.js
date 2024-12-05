@@ -618,22 +618,21 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
       }
     });
 
+    const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', 'LONGSS', '');
     console.log('FILE DATA', fileMetaTags);
 
-    const createFileMigrationLogResultq =  createFileMigrationLog(accessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', JSON.stringify(googleDriveFolderIds), '');
     // Prepare metadata to store in google drive file
-    // const googleDriveFolderIds = [];
-    // googleDriveFolderIds.push(googleDriveFolderId);
-    // const fileMetaData = {
-    //   name: googleDriveFileTitle,
-    //   parents: googleDriveFolderIds, 
-    //   mimeType: gFile[sfNamespace + 'Content_Type__c'],
-    //   properties: fileMetaTags
-    // };
+    /*const googleDriveFolderIds = [];
+    googleDriveFolderIds.push(googleDriveFolderId);
+    const fileMetaData = {
+      name: googleDriveFileTitle,
+      parents: googleDriveFolderIds, 
+      mimeType: gFile[sfNamespace + 'Content_Type__c'],
+      properties: fileMetaTags
+    };
 
-    const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', JSON.stringify(googleDriveFolderIds), '');
     // Create log
-    /*console.log('S3 FILE', gFile[sfNamespace + 'Content_Type__c']);
+    console.log('S3 FILE', gFile[sfNamespace + 'Content_Type__c']);
     const bufferStream = new Readable();
     bufferStream.push(buffer);
     bufferStream.push(null); 
