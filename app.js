@@ -601,35 +601,35 @@ function createOAuthClient(clientId, clientSecret, refreshToken) {
 async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata) {
   return new Promise((resolve, reject) => {
     //const failureReason = 'Your request to upload file in Google Drive has failed' + googleDriveFolderId + '__' + googleDriveFileTitle;
-   const drive = google.drive({ version: 'v3', auth: authClient });
+  //  const drive = google.drive({ version: 'v3', auth: authClient });
 
-    // Get meta tags
-    var fileMetaTags = {};
-      const metatype = 'google';
+  //   // Get meta tags
+  //   var fileMetaTags = {};
+  //     const metatype = 'google';
 
-      // Prepare google drive metadata map
-      Object.entries(googleDriveFileMetadata).forEach(([filedAPIName, value]) => {
-        var fieldAPI = filedAPIName;
-        var metaFieldAPI = 'x-' + metatype + '-meta-' + fieldAPI.toLowerCase();
-        if (googleDriveFileMetadata[fieldAPI] !== undefined && googleDriveFileMetadata[fieldAPI] !== null) {
-          fileMetaTags[metaFieldAPI] = googleDriveFileMetadata[fieldAPI].toString();
-      } else {
-          fileMetaTags[metaFieldAPI] = '';
-      }
-    });
+  //     // Prepare google drive metadata map
+  //     Object.entries(googleDriveFileMetadata).forEach(([filedAPIName, value]) => {
+  //       var fieldAPI = filedAPIName;
+  //       var metaFieldAPI = 'x-' + metatype + '-meta-' + fieldAPI.toLowerCase();
+  //       if (googleDriveFileMetadata[fieldAPI] !== undefined && googleDriveFileMetadata[fieldAPI] !== null) {
+  //         fileMetaTags[metaFieldAPI] = googleDriveFileMetadata[fieldAPI].toString();
+  //     } else {
+  //         fileMetaTags[metaFieldAPI] = '';
+  //     }
+  //   });
 
-    console.log('FILE DATA', fileMetaTags);
+  //   console.log('FILE DATA', fileMetaTags);
 
-    // Prepare metadata to store in google drive file
-    const googleDriveFolderIds = [];
-    googleDriveFolderIds.push(googleDriveFolderId);
+  //   // Prepare metadata to store in google drive file
+  //   const googleDriveFolderIds = [];
+  //   googleDriveFolderIds.push(googleDriveFolderId);
 
-    const fileMetaData = {
-      name: googleDriveFileTitle,
-      parents: googleDriveFolderIds, 
-      //mimeType: gFile[sfNamespace + 'Content_Type__c'],
-      //properties: fileMetaTags
-    };
+  //   const fileMetaData = {
+  //     name: googleDriveFileTitle,
+  //     parents: googleDriveFolderIds, 
+  //     //mimeType: gFile[sfNamespace + 'Content_Type__c'],
+  //     //properties: fileMetaTags
+  //   };
     const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', gFile[sfNamespace + 'Content_Type__c'], '');
 
 
