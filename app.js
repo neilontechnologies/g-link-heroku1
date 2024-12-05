@@ -59,12 +59,12 @@ app.post('/uploadsalesforcefile', async (req, res) => {
   } = req.body;
 
 
-    // We are sending the request immediately because we cannot wait untill the whole migration is completed. It will timeout the API request in Apex.
-    res.send(`Heroku service to migrate Salesforce File has been started successfully. g_file: ${g_file}`);
-    
-    // Get salesforce response
-    const migrateSalesforceResult = migrateSalesforce(sf_file_id, google_drive_client_id, google_drive_secret_id, google_drive_security_token, sf_client_id, sf_client_secret, sf_username, sf_password, google_drive_bucket_name, google_drive_folder_key, google_drive_file_title, sf_file_size, 
-      sf_content_document_id, sf_parent_id, sf_content_document_link_id, sf_namespace, sf_delete_file, sf_create_log, g_file, google_drive_file_meta_data, google_drive_folder_id);
+  // We are sending the request immediately because we cannot wait untill the whole migration is completed. It will timeout the API request in Apex.
+  res.send(`Heroku service to migrate Salesforce File has been started successfully.`);
+
+  // Get salesforce response
+  const migrateSalesforceResult = migrateSalesforce(sf_file_id, google_drive_client_id, google_drive_secret_id, google_drive_security_token, sf_client_id, sf_client_secret, sf_username, sf_password, google_drive_bucket_name, google_drive_folder_key, google_drive_file_title, sf_file_size, 
+    sf_content_document_id, sf_parent_id, sf_content_document_link_id, sf_namespace, sf_delete_file, sf_create_log, g_file, google_drive_file_meta_data, google_drive_folder_id);
 
   } catch(error){
     console.log(error);
@@ -89,8 +89,6 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
     salesforceAccessToken = salesforceTokenResponse.accessToken;
     instanceUrl = salesforceTokenResponse.instanceUrl
   }
-
-  const createFileMigrationLogResult =  createFileMigrationLog(salesforceTokenResponse.accessToken, salesforceTokenResponse.instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN',JSON.stringify(gFile), '');
 
   // Check required parameters
   if(sfFileSize &&  sfFileId && (googleDriveFolderKey || sfParentId) && googleDriveFileTitle){
@@ -622,40 +620,38 @@ function createOAuthClient(clientId, clientSecret, refreshToken) {
 async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata) {
   return new Promise((resolve, reject) => {
     //const failureReason = 'Your request to upload file in Google Drive has failed' + googleDriveFolderId + '__' + googleDriveFileTitle;
-  //  const drive = google.drive({ version: 'v3', auth: authClient });
+   const drive = google.drive({ version: 'v3', auth: authClient });
 
   //   // Get meta tags
-  //   var fileMetaTags = {};
-  //     const metatype = 'google';
+    var fileMetaTags = {};
+      const metatype = 'google';
 
-  //     // Prepare google drive metadata map
-  //     Object.entries(googleDriveFileMetadata).forEach(([filedAPIName, value]) => {
-  //       var fieldAPI = filedAPIName;
-  //       var metaFieldAPI = 'x-' + metatype + '-meta-' + fieldAPI.toLowerCase();
-  //       if (googleDriveFileMetadata[fieldAPI] !== undefined && googleDriveFileMetadata[fieldAPI] !== null) {
-  //         fileMetaTags[metaFieldAPI] = googleDriveFileMetadata[fieldAPI].toString();
-  //     } else {
-  //         fileMetaTags[metaFieldAPI] = '';
-  //     }
-  //   });
+      // Prepare google drive metadata map
+      Object.entries(googleDriveFileMetadata).forEach(([filedAPIName, value]) => {
+        var fieldAPI = filedAPIName;
+        var metaFieldAPI = 'x-' + metatype + '-meta-' + fieldAPI.toLowerCase();
+        if (googleDriveFileMetadata[fieldAPI] !== undefined && googleDriveFileMetadata[fieldAPI] !== null) {
+          fileMetaTags[metaFieldAPI] = googleDriveFileMetadata[fieldAPI].toString();
+      } else {
+          fileMetaTags[metaFieldAPI] = '';
+      }
+    });
 
   //   console.log('FILE DATA', fileMetaTags);
 
-  //   // Prepare metadata to store in google drive file
-  //   const googleDriveFolderIds = [];
-  //   googleDriveFolderIds.push(googleDriveFolderId);
+    // Prepare metadata to store in google drive file
+    const googleDriveFolderIds = [];
+    googleDriveFolderIds.push(googleDriveFolderId);
 
-  //   const fileMetaData = {
-  //     name: googleDriveFileTitle,
-  //     parents: googleDriveFolderIds, 
-  //     //mimeType: gFile[sfNamespace + 'Content_Type__c'],
-  //     //properties: fileMetaTags
-  //   };
-    const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN',JSON.stringify(gFile), '');
-
+    const fileMetaData = {
+      name: googleDriveFileTitle,
+      parents: googleDriveFolderIds, 
+      mimeType: gFile[sfNamespace + 'Content_Type__c'],
+      properties: fileMetaTags
+    };
 
     // Create log
-    /*console.log('S3 FILE', gFile[sfNamespace + 'Content_Type__c']);
+    console.log('S3 FILE', gFile[sfNamespace + 'Content_Type__c']);
     const bufferStream = new Readable();
     bufferStream.push(buffer);
     bufferStream.push(null); 
@@ -709,6 +705,6 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
           }
           resolve(file);
         }
-    );*/
+    );
   });
 }
