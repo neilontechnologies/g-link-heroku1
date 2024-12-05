@@ -35,17 +35,36 @@ app.post('/uploadsalesforcefile', async (req, res) => {
   try{
     // Get all headers from apex
     const {
-      google_drive_client_id, google_drive_secret_id, google_drive_security_token, sf_client_id, sf_client_secret,
-      sf_username, sf_password, google_drive_file_title, sf_parent_id,
-      google_drive_folder_key, google_drive_bucket_name,
-      sf_content_document_id, sf_file_size, sf_file_id, sf_content_document_link_id, sf_namespace, sf_delete_file, sf_create_log, g_file, google_drive_file_meta_data, google_drive_folder_id
-    } = req.body;
+      google_drive_client_id,
+      google_drive_secret_id,
+      sf_client_id,
+      sf_client_secret,
+      sf_username,
+      sf_password,
+      google_drive_file_title,
+      sf_parent_id,
+      google_drive_folder_key,
+      google_drive_bucket_name,
+      sf_content_document_id,
+      sf_file_size,
+      sf_file_id,
+      sf_content_document_link_id,
+      sf_namespace,
+      sf_delete_file,
+      sf_create_log,
+      g_file,
+      google_drive_file_meta_data,
+      google_drive_security_token,
+      google_drive_folder_id
+  } = req.body;
+
 
     // We are sending the request immediately because we cannot wait untill the whole migration is completed. It will timeout the API request in Apex.
     res.send(`Heroku service to migrate Salesforce File has been started successfully.`);
 
     // Get salesforce response
-    const migrateSalesforceResult = migrateSalesforce(sf_file_id, google_drive_client_id, google_drive_secret_id, google_drive_security_token, sf_client_id, sf_client_secret, sf_username, sf_password, google_drive_bucket_name, google_drive_folder_key, google_drive_file_title, sf_file_size, sf_content_document_id, sf_parent_id, sf_content_document_link_id, sf_namespace, sf_delete_file, sf_create_log, g_file, google_drive_file_meta_data, google_drive_folder_id);
+    const migrateSalesforceResult = migrateSalesforce(sf_file_id, google_drive_client_id, google_drive_secret_id, google_drive_security_token, sf_client_id, sf_client_secret, sf_username, sf_password, google_drive_bucket_name, google_drive_folder_key, google_drive_file_title, sf_file_size, 
+      sf_content_document_id, sf_parent_id, sf_content_document_link_id, sf_namespace, sf_delete_file, sf_create_log, g_file, google_drive_file_meta_data, google_drive_folder_id);
 
   } catch(error){
     console.log(error);
