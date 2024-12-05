@@ -573,7 +573,7 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
     const drive = google.drive({ version: 'v3', auth: authClient });
 
     // Get meta tags
-    /*var fileMetaTags = {};
+    var fileMetaTags = {};
       const metatype = 'google';
 
       // Prepare google drive metadata map
@@ -654,6 +654,6 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
           }
           resolve(file);
         }
-    );*/
+    );
   });
 }
