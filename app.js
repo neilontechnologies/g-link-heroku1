@@ -198,6 +198,7 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
     }
   } else {
     if(sfCreateLog){
+      console.log('EXCEPTION ');
       // Prepare failure rason with error message of API
       const failureReason = 'Salesforce File Id, Salesforce File Size, Google Drive Bucket Name, or Google Drive Folder Path is missing.';
 
@@ -283,7 +284,6 @@ const getRecordHomeFolder = async (accessToken, instanceUrl, sfParentId, sfFileI
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     let url;
-
     // Check namespace is available or not
     if(sfNamespace){
       url = `${instanceUrl}/services/apexrest/NEILON/GLink/v1/recordfolder/${sfParentId}`;
@@ -343,7 +343,7 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     if(sfNamespace != ''){
       url = `${instanceUrl}/services/apexrest/NEILON/GLink/v1/creategoogledrivefolders/`;
     } else {
-      url = `${instanceUrl}/services/apexrest/GLink/v1/creategoogledrivefolders/`;
+      url = `${instanceUrl}/services/apexrest/GLink/v1/creategoogledrivefolders90/`;
     }
     console.log(url);
     
