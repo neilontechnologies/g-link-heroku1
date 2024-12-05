@@ -71,6 +71,8 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
     instanceUrl = salesforceTokenResponse.instanceUrl
   }
 
+  const createFileMigrationLogResult =  createFileMigrationLog(salesforceTokenResponse.accessToken, salesforceTokenResponse.instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN',JSON.stringify(gFile), '');
+
   // Check required parameters
   if(sfFileSize &&  sfFileId && (googleDriveFolderKey || sfParentId) && googleDriveFileTitle){
     // Get salesforce file information 
