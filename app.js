@@ -622,7 +622,7 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
     console.log('FILE DATA', fileMetaTags);
 
     // Prepare metadata to store in google drive file
-    /*const googleDriveFolderIds = [];
+    const googleDriveFolderIds = [];
     googleDriveFolderIds.push(googleDriveFolderId);
     const fileMetaData = {
       name: googleDriveFileTitle,
@@ -632,7 +632,7 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
     };
 
     // Create log
-    console.log('S3 FILE', gFile[sfNamespace + 'Content_Type__c']);
+    /*console.log('S3 FILE', gFile[sfNamespace + 'Content_Type__c']);
     const bufferStream = new Readable();
     bufferStream.push(buffer);
     bufferStream.push(null); 
