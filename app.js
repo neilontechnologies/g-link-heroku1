@@ -144,7 +144,7 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
           if(createGoogleDriveFolderResult1 != null && createGoogleDriveFolderResult1.code == 200 && createGoogleDriveFolderResult1.data != null){
 
             // Get google drive folder id
-            const googleDriveFolderId = createGoogleDriveFolderResult1.data.split('/').pop(); ;// get last / id
+            const googleDriveFolderId = createGoogleDriveFolderResult1.data.split('/').pop();
 
           const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', JSON.stringify(googleDriveFolderId), '');
           const response = await uploadFileToGoogleDrive(googleDriveAccessToken, getSalesforceFileResult, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata);
@@ -174,28 +174,27 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
 
       console.log(googleDriveFolderPath);
       const googleDriveFilePath = googleDriveFolderKey + '/' + googleDriveFileTitle
-      console.log('FILE PATH', googleDriveFilePath);
       // Create google drive folder using google drive folder path
       const {createGoogleDriveFolderResult1} = await createGoogleDriveFolder(salesforceAccessToken, instanceUrl, googleDriveFolderPath, sfFileId, sfContentDocumentLinkId, sfNamespace, sfCreateLog);
 
       // Check folder is created or not
-      // if(createGoogleDriveFolderResult1 != null && createGoogleDriveFolderResult1.code == 200 && createGoogleDriveFolderResult1.data != null){
+      if(createGoogleDriveFolderResult1 != null && createGoogleDriveFolderResult1.code == 200 && createGoogleDriveFolderResult1.data != null){
 
-      //   // Get google drive folder id
-      //   const googleDriveFolderId = createGoogleDriveFolderResult1.data.split('/')[2];
+        // Get google drive folder id
+        const googleDriveFolderId = createGoogleDriveFolderResult1.data.split('/').pop();
 
-      //   // Upload file into google drive 
-      //   const response = await uploadFileToGoogleDrive(googleDriveAccessToken, getSalesforceFileResult, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata);
+        // Upload file into google drive 
+        const response = await uploadFileToGoogleDrive(googleDriveAccessToken, getSalesforceFileResult, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata);
 
-      //   if(response.status == 200){
-      //     if(response && response.data && response.data.id){
-      //       const googleDriveFileId = response.data.id;
+        if(response.status == 200){
+          if(response && response.data && response.data.id){
+            const googleDriveFileId = response.data.id;
 
-      //       // Create g file record if file is successfully uploaded into google drive
-      //       const createGFilesInSalesforceResult = await createGFilesInSalesforce(salesforceAccessToken, instanceUrl, googleDriveBucketName, googleDriveFilePath, sfFileSize, sfContentDocumentId, sfFileId, sfContentDocumentLinkId, sfNamespace, sfDeleteFile, sfCreateLog, gFile, googleDriveFileId);
-      //     }
-      //   }
-      // }
+            // Create g file record if file is successfully uploaded into google drive
+            const createGFilesInSalesforceResult = await createGFilesInSalesforce(salesforceAccessToken, instanceUrl, googleDriveBucketName, googleDriveFilePath, sfFileSize, sfContentDocumentId, sfFileId, sfContentDocumentLinkId, sfNamespace, sfDeleteFile, sfCreateLog, gFile, googleDriveFileId);
+          }
+        }
+      }
     }
   } else {
     if(sfCreateLog){
@@ -340,8 +339,6 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     let url;
     const xhr = new XMLHttpRequest();
 
-    console.log('FOLDE PATH', googleDriveFolderPath);
-    //console.log(instanceUrl);
     //Check namespace is available or not
     if(sfNamespace != ''){
       url = `${instanceUrl}/services/apexrest/NEILON/GLink/v1/creategoogledrivefolders/`;
@@ -352,8 +349,6 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     
     var textBody = googleDriveFolderPath;
 
-    //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'ACCESS TOKEN  '+accessToken + 'INSTANCE URl '+instanceUrl+JSON.stringify(googleDriveFolderPath)+'NAME SPACE-'+sfNamespace+'FILE ID '+sfFileId+ 'link id '+sfContentDocumentLinkId, sfNamespace);
-    console.log('RESULTT POST', 'ACCESS TOKEN  '+accessToken + 'INSTANCE URl '+instanceUrl+JSON.stringify(googleDriveFolderPath)+'NAME SPACE-'+sfNamespace+'FILE ID '+sfFileId+ 'link id '+sfContentDocumentLinkId)
     // Open the request
     xhr.open('POST', url, true);
     xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
@@ -588,10 +583,10 @@ function createOAuthClient(clientId, clientSecret, refreshToken) {
 // A Function that will upload the desired file to google drive folder
 async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata) {
   return new Promise((resolve, reject) => {
-    //const failureReason = 'Your request to upload file in Google Drive has failed' + googleDriveFolderId + '__' + googleDriveFileTitle;
-   const drive = google.drive({ version: 'v3', auth: authClient });
+    // Authenticate with google
+    const drive = google.drive({ version: 'v3', auth: authClient });
 
-  //   // Get meta tags
+    // Get meta tags
     var fileMetaTags = {};
       const metatype = 'google';
 
@@ -605,8 +600,6 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
           fileMetaTags[metaFieldAPI] = '';
       }
     });
-
-  //   console.log('FILE DATA', fileMetaTags);
 
     // Prepare metadata to store in google drive file
     const googleDriveFolderIds = [];
