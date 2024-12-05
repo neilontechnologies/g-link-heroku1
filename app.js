@@ -146,7 +146,7 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
             // Get google drive folder id
             const googleDriveFolderId = createGoogleDriveFolderResult1.data.split('/').pop(); ;// get last / id
 
-          const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', JSON.stringify(createGoogleDriveFolderResult1), '');
+          const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', JSON.stringify(googleDriveFolderId), '');
           const response = await uploadFileToGoogleDrive(googleDriveAccessToken, getSalesforceFileResult, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata);
 
             if(response.status == 200){
@@ -154,7 +154,7 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
                 const googleDriveFileId = response.data.id;
 
                 // Create g file record if file is successfully uploaded into google drive
-                //const createGFilesInSalesforceResult = await createGFilesInSalesforce(salesforceAccessToken, instanceUrl, googleDriveBucketName, googleDriveFilePath, sfFileSize, sfContentDocumentId, sfFileId, sfContentDocumentLinkId, sfNamespace, sfDeleteFile, sfCreateLog, gFile, googleDriveFileId);
+                const createGFilesInSalesforceResult = await createGFilesInSalesforce(salesforceAccessToken, instanceUrl, googleDriveBucketName, googleDriveFilePath, sfFileSize, sfContentDocumentId, sfFileId, sfContentDocumentLinkId, sfNamespace, sfDeleteFile, sfCreateLog, gFile, googleDriveFileId);
               }
             }
           }
