@@ -320,7 +320,7 @@ const getRecordHomeFolder = async (accessToken, instanceUrl, sfParentId, sfFileI
           }
     
           // Reject the promise with an error after logging
-          reject(failureReason);
+          reject(new Error(failureReason));
         }
       }
     };
@@ -375,11 +375,14 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
           // Prepare failure rason with error message of API
           const failureReason = 'Your request to create G-Folder for the record failed. ERROR: ' + response[0].message;
 
-          if(sfCreateLog){
-            // Create File Migration Logs
-            const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
+          if (sfCreateLog) {
+            // Log creation before rejecting the promise
+            createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace)
+              .then(() => reject(new Error(failureReason))) // Reject after log creation
+              .catch(() => reject(new Error(failureReason))); // Handle logging failure
+          } else {
+            reject(new Error(failureReason));
           }
-          reject(new Error(failureReason));
         }
       }
     };
