@@ -618,7 +618,6 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
       properties: fileMetaTags
     };
 
-    const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
     // Create log
     console.log('S3 FILE', gFile[sfNamespace + 'Content_Type__c']);
     const bufferStream = new Readable();
@@ -631,6 +630,7 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
       mimeType: gFile[sfNamespace + 'Content_Type__c'],
     };
 
+    const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
     drive.files.create(
       {
         resource: fileMetaData,
