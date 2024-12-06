@@ -630,7 +630,6 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
       mimeType: gFile[sfNamespace + 'Content_Type__c'],
     };
 
-    const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
     drive.files.create(
       {
         resource: fileMetaData,
@@ -639,16 +638,17 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
       },
         (error, file) => {
           if (error) {
-            console.log('ERROR----------------', error)
-            const failureReason = 'Your request to upload file in Google Drive has failed' + error;
+            const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(error), sfNamespace);
+            // console.log('ERROR----------------', error)
+            // const failureReason = 'Your request to upload file in Google Drive has failed' + error;
 
-            // Check sf create log is true or false
-            if(sfCreateLog){
-              console.log('FALIURE REASON'+failureReason);
-              // Create File Migration Logs
-              //const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
-            }
-            return reject(error);
+            // // Check sf create log is true or false
+            // if(sfCreateLog){
+            //   console.log('FALIURE REASON'+failureReason);
+            //   // Create File Migration Logs
+            //   //const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
+            // }
+            // return reject(error);
           }
 
           // Add public permissions if required
