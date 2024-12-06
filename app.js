@@ -363,7 +363,7 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
           resolve({
             createGoogleDriveFolderResult1: response
           });  // Resolve the Promise on success
-        }  else {
+        }  /*else {
 
           const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
           // Prepare failure rason with error message of API
@@ -374,7 +374,7 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
             //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
           }
           reject(new Error(failureReason));
-        }
+        }*/
       }
     };
     
