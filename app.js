@@ -638,15 +638,16 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
       },
         (error, file) => {
           if (error) {
-            console.log('ERROR----------------', error)
-            const failureReason = 'Your request to upload file in Google Drive has failed' + error;
+            const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
+            // console.log('ERROR----------------', error)
+            // const failureReason = 'Your request to upload file in Google Drive has failed' + error;
 
-            // Check sf create log is true or false
-            if(sfCreateLog){
-              console.log('FALIURE REASON'+failureReason);
-              // Create File Migration Logs
-              const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
-            }
+            // // Check sf create log is true or false
+            // if(sfCreateLog){
+            //   console.log('FALIURE REASON'+failureReason);
+            //   // Create File Migration Logs
+            //   const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
+            // }
             //return reject(error);
           }
 
@@ -668,7 +669,7 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
                 if (sfCreateLog) {
                   const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
                 }
-                //return reject(permissionError);
+                return reject(permissionError);
               }
           }
           resolve(file);
