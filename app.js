@@ -146,7 +146,7 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
             // Get google drive folder id
             const googleDriveFolderId = createGoogleDriveFolderResult1.data.split('/').pop();
 
-          const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', JSON.stringify(googleDriveFolderId), '');
+          // const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', JSON.stringify(googleDriveFolderId), '');
           const response = await uploadFileToGoogleDrive(googleDriveAccessToken, getSalesforceFileResult, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata);
 
             if(response.status == 200){
@@ -341,13 +341,13 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
 
     //Check namespace is available or not
     if(sfNamespace != ''){
-      url = `${instanceUrl}/services/apexrest/NEILON/GLink/v1/creategoogledrivefolders/`;
+      url = `${instanceUrl}/services/apexrest/NEILON/GLink/v1/creategoogledrivefolders/`;// NEILON2
     } else {
-      url = `${instanceUrl}/services/apexrest/GLink/v1/creategoogledrivefolders90/`;
+      url = `${instanceUrl}/services/apexrest/GLink/v1/creategoogledrivefolders/`;
     }
     console.log(url);
     
-    var textBody = googleDriveFolderPath;
+    var textBody = googleDriveFolderPath;// 
 
     // Open the request
     xhr.open('POST', url, true);
@@ -358,8 +358,8 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
       if (xhr.readyState === 4) {
         const response = JSON.parse(xhr.responseText);
         console.log(response);
-        const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(response), sfNamespace);
-        if (xhr.status === 200 && response.status !== 'BAD_REQUEST') {
+        //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(response), sfNamespace);
+        if (xhr.status === 200) {//response.status !== 'BAD_REQUEST'
           resolve({
             createGoogleDriveFolderResult1: response
           });  // Resolve the Promise on success
