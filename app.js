@@ -580,7 +580,6 @@ app.listen(port, () => {
 
 // This function is used to create authentication with google drive
 function createOAuthClient(clientId, clientSecret, refreshToken) {
-  clientId = clientId + 'ACB';
   const oauth2Client = new OAuth2(clientId, clientSecret);
   oauth2Client.setCredentials({ refresh_token: refreshToken });
   return oauth2Client;
