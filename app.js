@@ -355,10 +355,10 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     xhr.setRequestHeader('Content-Type', 'text/plain');
     
     xhr.onload = function() {
-      const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
       if (xhr.readyState === 4) {
         const response = JSON.parse(xhr.responseText);
         console.log(response);
+        const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, response, sfNamespace);
         if (xhr.status === 200 && response.status !== 'BAD_REQUEST') {
           resolve({
             createGoogleDriveFolderResult1: response
