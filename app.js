@@ -289,7 +289,6 @@ const getRecordHomeFolder = async (accessToken, instanceUrl, sfParentId, sfFileI
     const xhr = new XMLHttpRequest();
     let url;
 
-    sfParentId = sfParentId + 'dsd';
     // Check namespace is available or not
     if(sfNamespace){
       url = `${instanceUrl}/services/apexrest/NEILON/GLink/v1/recordfolder/${sfParentId}`;
@@ -591,7 +590,8 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
   return new Promise((resolve, reject) => {
     // Authenticate with google
     const drive = google.drive({ version: 'v3', auth: authClient });
-
+ 
+    googleDriveFolderId = googleDriveFolderId + 'abc';
     // Get meta tags
     var fileMetaTags = {};
       const metatype = 'google';
