@@ -638,7 +638,7 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
       },
         (error, file) => {
           if (error) {
-            const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'test', sfNamespace);
+            const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(error), sfNamespace);
             console.log('ERROR----------------', error)
             const failureReason = 'Your request to upload file in Google Drive has failed' + error;
 
