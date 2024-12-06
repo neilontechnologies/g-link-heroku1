@@ -305,12 +305,12 @@ const getRecordHomeFolder = async (accessToken, instanceUrl, sfParentId, sfFileI
       if (xhr.readyState === 4) {
         const response = JSON.parse(xhr.responseText);
         const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(response), sfNamespace);
-        // console.log(response);
-        // if (xhr.status === 200) {
-        //   resolve({
-        //     getRecordHomeFolderResult: response
-        //   });  // Resolve the Promise on success
-        // }  else {
+        console.log(response);
+        if (xhr.status === 200) {
+          resolve({
+            getRecordHomeFolderResult: response
+          });  // Resolve the Promise on success
+        } // else {
         //   // Prepare failure rason with error message of API
         //   const failureReason = 'Your request to create G-Folder for the record failed. ERROR: ' + response[0].message;
 
