@@ -304,22 +304,23 @@ const getRecordHomeFolder = async (accessToken, instanceUrl, sfParentId, sfFileI
     xhr.onload = function() {
       if (xhr.readyState === 4) {
         const response = JSON.parse(xhr.responseText);
-        const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, `Status: ${xhr.status}`, sfNamespace);
+        //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, `Status: ${xhr.status}`, sfNamespace);
         console.log(response);
         if (xhr.status === 200) {
           resolve({
             getRecordHomeFolderResult: response
           });  // Resolve the Promise on success
-        } // else {
-        //   // Prepare failure rason with error message of API
-        //   const failureReason = 'Your request to create G-Folder for the record failed. ERROR: ' + response[0].message;
+        } else {
+          const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, `Status: ${xhr.status}`, sfNamespace);
+          // // Prepare failure rason with error message of API
+          // const failureReason = 'Your request to create G-Folder for the record failed. ERROR: ' + response[0].message;
 
-        //   if(sfCreateLog){
-        //     // Create File Migration Logs
-        //     const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
-        //   }
-        //   reject(new Error(failureReason));
-        // }
+          // if(sfCreateLog){
+          //   // Create File Migration Logs
+          //   const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
+          // }
+          // reject(new Error(failureReason));
+        }
       }
     };
 
