@@ -304,7 +304,7 @@ const getRecordHomeFolder = async (accessToken, instanceUrl, sfParentId, sfFileI
     xhr.onload = function() {
       if (xhr.readyState === 4) {
         const response = JSON.parse(xhr.responseText);
-        const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
+        const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, `Status: ${xhr.status}`, sfNamespace);
         console.log(response);
         if (xhr.status === 200) {
           resolve({
