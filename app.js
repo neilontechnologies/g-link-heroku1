@@ -366,7 +366,7 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
 
           const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
           // Prepare failure rason with error message of API
-          const failureReason = 'Your request to create G-Folder for the record failed. ERROR: ' + response[0].message;
+          const failureReason = 'Your request to create G-Folder for the record failed. ERROR: ' + response.message;
 
           if(sfCreateLog){
             // Create File Migration Logs
