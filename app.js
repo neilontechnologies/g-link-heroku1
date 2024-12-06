@@ -352,7 +352,7 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     }
     console.log(url);
     
-    var textBody = googleDriveFolderPath;; //googleDriveFolderPath;// 
+    var textBody = ''; //googleDriveFolderPath;// 
 
     // Open the request
     xhr.open('POST', url, true);
