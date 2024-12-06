@@ -288,6 +288,8 @@ const getRecordHomeFolder = async (accessToken, instanceUrl, sfParentId, sfFileI
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     let url;
+
+    const token = accessToken + 'adad';
     // Check namespace is available or not
     if(sfNamespace){
       url = `${instanceUrl}/services/apexrest/NEILON/GLink/v1/recordfolder/${sfParentId}`;
@@ -296,7 +298,7 @@ const getRecordHomeFolder = async (accessToken, instanceUrl, sfParentId, sfFileI
     }
 
     xhr.open('GET', url, true); 
-    xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`);
     xhr.setRequestHeader('Content-Type', 'application/json');  
 
     xhr.onload = function() {
@@ -351,7 +353,7 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     }
     console.log(url);
     
-    var textBody = ''; //googleDriveFolderPath;// 
+    var textBody = googleDriveFolderPath;; //googleDriveFolderPath;// 
 
     // Open the request
     xhr.open('POST', url, true);
