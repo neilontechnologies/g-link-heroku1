@@ -313,7 +313,9 @@ const getRecordHomeFolder = async (accessToken, instanceUrl, sfParentId, sfFileI
         } else {
           const failureReason = 'Your request to create G-Folder for the record failed. ERROR: ' + response[0].message;
 
-          const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
+          if(sfCreateLog){
+            const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
+          }
           // // Prepare failure rason with error message of API
 
           // if(sfCreateLog){
