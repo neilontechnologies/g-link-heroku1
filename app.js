@@ -158,7 +158,7 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
               }
             }
           } else {
-            const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', JSON.stringify(createGoogleDriveFolderResult1), '');
+            const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, createGoogleDriveFolderResult1.message, sfNamespace);
           }
         }
       } else{
