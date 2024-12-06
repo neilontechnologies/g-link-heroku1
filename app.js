@@ -344,7 +344,6 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
     let url;
     const xhr = new XMLHttpRequest();
 
-    const token = 'abc';
     //Check namespace is available or not
     if(sfNamespace != ''){
       url = `${instanceUrl}/services/apexrest/NEILON/GLink/v1/creategoogledrivefolders/`;// NEILON2
@@ -357,7 +356,7 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
 
     // Open the request
     xhr.open('POST', url, true);
-    xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+    xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
     xhr.setRequestHeader('Content-Type', 'text/plain');
     
     xhr.onload = function() {
