@@ -158,7 +158,9 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
               }
             }
           } else {
-            const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, createGoogleDriveFolderResult1.message, sfNamespace);
+            // Prepare failure rason with error message of API
+            const failureReason = 'Your request to create G-Folder for the record failed. ERROR: ' + createGoogleDriveFolderResult1.message;
+            const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
           }
         }
       } else{
