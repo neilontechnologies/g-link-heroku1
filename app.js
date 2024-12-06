@@ -638,7 +638,7 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
       },
         (error, file) => {
           if (error) {
-            const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(error), sfNamespace);
+            const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'test', sfNamespace);
             // console.log('ERROR----------------', error)
             // const failureReason = 'Your request to upload file in Google Drive has failed' + error;
 
@@ -652,7 +652,7 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
           }
 
           // Add public permissions if required
-          if (gFile[sfNamespace + 'Public_On_Google__c']) {
+          /*if (gFile[sfNamespace + 'Public_On_Google__c']) {
               try {
                 drive.permissions.create({
                   fileId: file.data.id,
@@ -672,7 +672,7 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
                 return reject(permissionError);
               }
           }
-          resolve(file);
+          resolve(file);*/
         }
     );
   });
