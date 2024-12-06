@@ -316,13 +316,14 @@ const getRecordHomeFolder = async (accessToken, instanceUrl, sfParentId, sfFileI
           if(sfCreateLog){
             const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
           }
+          reject(new Error(failureReason));
           // // Prepare failure rason with error message of API
 
           // if(sfCreateLog){
           //   // Create File Migration Logs
           //   const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
           // }
-          // reject(new Error(failureReason));
+          // 
         }
       }
     };
