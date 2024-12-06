@@ -157,6 +157,8 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
                 const createGFilesInSalesforceResult = await createGFilesInSalesforce(salesforceAccessToken, instanceUrl, googleDriveBucketName, googleDriveFilePath, sfFileSize, sfContentDocumentId, sfFileId, sfContentDocumentLinkId, sfNamespace, sfDeleteFile, sfCreateLog, gFile, googleDriveFileId);
               }
             }
+          } else {
+            const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', JSON.stringify(createGoogleDriveFolderResult1), '');
           }
         }
       } else{
@@ -358,23 +360,20 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
       if (xhr.readyState === 4) {
         const response = JSON.parse(xhr.responseText);
         console.log(response);
-        //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(response), sfNamespace);
-        if (xhr.status === 200) {//response.status !== 'BAD_REQUEST'
+        if (xhr.status === 200) {
           resolve({
             createGoogleDriveFolderResult1: response
           });  // Resolve the Promise on success
-        }  /*else {
-
-          const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
+        } else {
           // Prepare failure rason with error message of API
-          const failureReason = 'Your request to create G-Folder for the record failed. ERROR: ' + response.message;
+          const failureReason = 'Your request to create G-Folder for the record failed. ERROR: ' + response[0].message;
 
           if(sfCreateLog){
             // Create File Migration Logs
-            //const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
+            const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
           }
           reject(new Error(failureReason));
-        }*/
+        }
       }
     };
     
