@@ -361,6 +361,7 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
       if (xhr.readyState === 4) {
         const response = JSON.parse(xhr.responseText);
         console.log(response);
+        const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(response), sfNamespace);
         if (xhr.status === 200) {
           resolve({
             createGoogleDriveFolderResult1: response
