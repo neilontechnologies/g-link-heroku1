@@ -648,7 +648,7 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
               // Create File Migration Logs
               //const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
             }
-            // return reject(error);
+            return reject(error);
           }
 
           // Add public permissions if required
