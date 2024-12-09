@@ -145,7 +145,6 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
 
             // Get google drive folder id
             const googleDriveFolderId = createGoogleDriveFolderResult1.data.split('/').pop();
-            const createFileMigrationLogResult = await createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, googleDriveFolderId, sfNamespace);
           // const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', JSON.stringify(googleDriveFolderId), '');
           const response = await uploadFileToGoogleDrive(googleDriveAccessToken, getSalesforceFileResult, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata);
 
@@ -588,6 +587,7 @@ function createOAuthClient(clientId, clientSecret, refreshToken) {
 // A Function that will upload the desired file to google drive folder
 async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata) {
   return new Promise((resolve, reject) => {
+    const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, googleDriveFolderId, sfNamespace);
     // Authenticate with google
     const drive = google.drive({ version: 'v3', auth: authClient });
  
