@@ -145,7 +145,7 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
 
             // Get google drive folder id
             const googleDriveFolderId = createGoogleDriveFolderResult1.data.split('/').pop();
-            const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfContentDocumentLinkId, sfNamespace);
+            //const createFileMigrationLogResult = createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfContentDocumentLinkId, sfNamespace);
           // const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, '068Dn00000EcDHsIAN', '06ADn00000O2NI7MAN', JSON.stringify(googleDriveFolderId), '');
           const response = await uploadFileToGoogleDrive(googleDriveAccessToken, getSalesforceFileResult, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata);
 
@@ -534,7 +534,7 @@ app.get('/', async (req, res) => {
     try {
       // Replace these values with your own Salesforce Connected App credentials
 
-      const sfFileId = '068Dn00000EcDHsIAN'; 
+      const sfFileId = '00PDn00000PiszYMAR'; 
       const googleDriveAccessKey = '1037230251368-3drs8fpsj9tthlkko34r0t33mpujn7f9.apps.googleusercontent.com';// googleDriveClientId
       const googleDriveSecretKey = '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';
       const sfClientId = '3MVG9ux34Ig8G5eoXuY2kbtuBIdKdkDgMkWQ8821Y5RCUJbOySsRT7HixQAZYVVMGvz35Wbq8YFWBlCJjNo8r';
@@ -543,11 +543,11 @@ app.get('/', async (req, res) => {
       const sfPassword = 'glink4321!HHLA0xCqxEgM5T7FtOW4ddaV4';
       const googleDriveBucketName = 'glink-test-org';
       const sfFileSize = 746858;
-      const sfContentDocumentId = '069Dn00000EqCgKIAV';
+      const sfContentDocumentId = null;
       const googleDriveFolderKey = null;//'Accounts/Test Account 1';
       const googleDriveFileTitle = 'S1234#.pdf';
-      const sfParentId = '001Dn00001B2NpwIAF';
-      const sfContentDocumentLinkId = '06ADn00000O2NI7MAN';
+      const sfParentId = '001Dn00001B2b4uIAB';
+      const sfContentDocumentLinkId = null;
       const sfNamespace = '';
       const sfDeleteFile = false;
       const sfCreateLog = true;
