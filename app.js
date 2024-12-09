@@ -587,8 +587,8 @@ function createOAuthClient(clientId, clientSecret, refreshToken) {
 // A Function that will upload the desired file to google drive folder
 async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata) {
   return new Promise((resolve, reject) => {
-    const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, googleDriveFolderId, sfNamespace);
     // Authenticate with google
+    const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
     const drive = google.drive({ version: 'v3', auth: authClient });
  
     // Get meta tags
