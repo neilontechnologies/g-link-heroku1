@@ -589,7 +589,6 @@ function createOAuthClient(clientId, clientSecret, refreshToken) {
 async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata) {
   return new Promise((resolve, reject) => {
     // Authenticate with google
-    const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
     const drive = google.drive({ version: 'v3', auth: authClient });
  
     // Get meta tags
@@ -630,6 +629,7 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
       mimeType: gFile[sfNamespace + 'Content_Type__c'],
     };
 
+    const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, googleDriveFolderId, sfNamespace);
     drive.files.create(
       {
         resource: fileMetaData,
