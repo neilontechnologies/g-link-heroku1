@@ -596,22 +596,21 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
     var fileMetaTags = {};
       const metatype = 'google';
 
-      const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, JSON.stringify(googleDriveFileMetadata), sfNamespace);
-
-      // Prepare google drive metadata map
-      /*Object.entries(googleDriveFileMetadata).forEach(([filedAPIName, value]) => {
-        var fieldAPI = filedAPIName;
-        var metaFieldAPI = 'x-' + metatype + '-meta-' + fieldAPI.toLowerCase();
-        if (googleDriveFileMetadata[fieldAPI] !== undefined && googleDriveFileMetadata[fieldAPI] !== null) {
-          fileMetaTags[metaFieldAPI] = googleDriveFileMetadata[fieldAPI].toString();
-      } else {
-          fileMetaTags[metaFieldAPI] = '';
+      if(googleDriveFileMetadata){
+        // Prepare google drive metadata map
+        Object.entries(googleDriveFileMetadata).forEach(([filedAPIName, value]) => {
+          var fieldAPI = filedAPIName;
+          var metaFieldAPI = 'x-' + metatype + '-meta-' + fieldAPI.toLowerCase();
+          if (googleDriveFileMetadata[fieldAPI] !== undefined && googleDriveFileMetadata[fieldAPI] !== null) {
+            fileMetaTags[metaFieldAPI] = googleDriveFileMetadata[fieldAPI].toString();
+          } else {
+              fileMetaTags[metaFieldAPI] = '';
+          }
+        })
       }
-    });*/
-
 
     // Prepare metadata to store in google drive file
-    /*const googleDriveFolderIds = [];
+    const googleDriveFolderIds = [];
     googleDriveFolderIds.push(googleDriveFolderId);
 
     const fileMetaData = {
@@ -677,6 +676,6 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
           }
           resolve(file);
         }
-    );*/
+    );
   });
 }
