@@ -141,6 +141,7 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
           // Create google drive folder busing google drive folder path
           const {createGoogleDriveFolderResult1} = await createGoogleDriveFolder(salesforceAccessToken, instanceUrl, googleDriveFolderPath, sfFileId, sfContentDocumentLinkId, sfNamespace, sfCreateLog);
 
+          const createFileMigrationLogResult = await createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TETS', sfNamespace);
           if(createGoogleDriveFolderResult1 != null && createGoogleDriveFolderResult1.code == 200 && createGoogleDriveFolderResult1.data != null){
 
             // Get google drive folder id
@@ -291,7 +292,7 @@ const getRecordHomeFolder = async (accessToken, instanceUrl, sfParentId, sfFileI
 
     // Check namespace is available or not
     if(sfNamespace){
-      url = `${instanceUrl}/services/apexrest/NEILON/GLink/v1/recordfolder/${sfParentId}`;
+      url = `${instanceUrl}/services/apexrest/NEILON2/GLink/v1/recordfolder/${sfParentId}`;
     } else{
       url = `${instanceUrl}/services/apexrest/GLink/v1/recordfolder/${sfParentId}`;
     }
@@ -346,7 +347,7 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
 
     //Check namespace is available or not
     if(sfNamespace != ''){
-      url = `${instanceUrl}/services/apexrest/NEILON/GLink/v1/creategoogledrivefolders/`;// NEILON2
+      url = `${instanceUrl}/services/apexrest/NEILON2/GLink/v1/creategoogledrivefolders/`;// NEILON2
     } else {
       url = `${instanceUrl}/services/apexrest/GLink/v1/creategoogledrivefolders/`;
     }
@@ -393,7 +394,7 @@ const createGFilesInSalesforce = async (accessToken, instanceUrl, googleDriveBuc
 
     // Check namespace is available or not
     if(sfNamespace != ''){
-      url = `${instanceUrl}/services/apexrest/NEILON/GLink/v1/creategfiles/`;
+      url = `${instanceUrl}/services/apexrest/NEILON2/GLink/v1/creategfiles/`;
     } else {
       console.log('TRUE');
       url = `${instanceUrl}/services/apexrest/GLink/v1/creategfiles/`;
@@ -484,7 +485,7 @@ const createFileMigrationLog = (accessToken, instanceUrl, sfFileId, sfContentDoc
     let url;
     const xhr = new XMLHttpRequest();
     if(sfNamespace != ''){
-      url = `${instanceUrl}/services/apexrest/NEILON/GLink/v1/createmigrationlog/`;
+      url = `${instanceUrl}/services/apexrest/NEILON2/GLink/v1/createmigrationlog/`;
     } else {
       url = `${instanceUrl}/services/apexrest/GLink/v1/createmigrationlog/`;
     }
