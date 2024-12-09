@@ -596,7 +596,7 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
     var fileMetaTags = {};
       const metatype = 'google';
 
-      const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
+      const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, googleDriveFileMetadata, sfNamespace);
 
       // Prepare google drive metadata map
       /*Object.entries(googleDriveFileMetadata).forEach(([filedAPIName, value]) => {
