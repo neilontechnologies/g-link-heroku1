@@ -111,6 +111,8 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
         }
       }
     } else if(sfParentId != null){
+      const createFileMigrationLogResult = await createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'Test', sfNamespace);
+
       // Check if google drive folder id is available for parentId or not
       const { getRecordHomeFolderResult } = await getRecordHomeFolder(salesforceAccessToken, instanceUrl, sfParentId, sfFileId, sfContentDocumentLinkId, sfNamespace, sfCreateLog);
 
@@ -136,7 +138,6 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
             }
           }
         } else {
-          const createFileMigrationLogResult = await createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'Test', sfNamespace);
           // Create google drive folder path
           const googleDriveFolderPath = getRecordHomeFolderResult.sObjects[0][sfNamespace + 'Bucket_Name__c'] + '/'+ getRecordHomeFolderResult.sObjects[0][sfNamespace + 'Google_Folder_Path__c'];
 
