@@ -145,17 +145,17 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
 
             // Get google drive folder id
             const googleDriveFolderId = createGoogleDriveFolderResult1.data.split('/').pop();
-            const createFileMigrationLogResult = await createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEXT'+JSON.stringify(googleDriveFolderId), sfNamespace);
+            const createFileMigrationLogResult = await createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEXT12'+JSON.stringify(googleDriveFolderId), sfNamespace);
             const response = await uploadFileToGoogleDrive(googleDriveAccessToken, getSalesforceFileResult, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata);
 
-            /*if(response.status == 200){
+            if(response.status == 200){
               if(response && response.data && response.data.id){
                 const googleDriveFileId = response.data.id;
 
                 // Create g file record if file is successfully uploaded into google drive
                 const createGFilesInSalesforceResult = await createGFilesInSalesforce(salesforceAccessToken, instanceUrl, googleDriveBucketName, googleDriveFilePath, sfFileSize, sfContentDocumentId, sfFileId, sfContentDocumentLinkId, sfNamespace, sfDeleteFile, sfCreateLog, gFile, googleDriveFileId);
               }
-            }*/
+            }
           } else {
             // Prepare failure rason with error message of API
             const failureReason = 'Your request to create G-Folder for the record failed. ERROR: ' + createGoogleDriveFolderResult1.message;
