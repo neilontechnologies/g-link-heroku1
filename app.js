@@ -590,7 +590,7 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
   return new Promise((resolve, reject) => {
     // Authenticate with google
     const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
-    /*const drive = google.drive({ version: 'v3', auth: authClient });
+    const drive = google.drive({ version: 'v3', auth: authClient });
  
     // Get meta tags
     var fileMetaTags = {};
@@ -674,6 +674,6 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
           }
           resolve(file);
         }
-    );*/
+    );
   });
 }
