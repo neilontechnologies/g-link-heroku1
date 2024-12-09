@@ -596,8 +596,10 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
     var fileMetaTags = {};
       const metatype = 'google';
 
+      const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
+
       // Prepare google drive metadata map
-      Object.entries(googleDriveFileMetadata).forEach(([filedAPIName, value]) => {
+      /*Object.entries(googleDriveFileMetadata).forEach(([filedAPIName, value]) => {
         var fieldAPI = filedAPIName;
         var metaFieldAPI = 'x-' + metatype + '-meta-' + fieldAPI.toLowerCase();
         if (googleDriveFileMetadata[fieldAPI] !== undefined && googleDriveFileMetadata[fieldAPI] !== null) {
@@ -605,9 +607,8 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
       } else {
           fileMetaTags[metaFieldAPI] = '';
       }
-    });
+    });*/
 
-    const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
 
     // Prepare metadata to store in google drive file
     /*const googleDriveFolderIds = [];
