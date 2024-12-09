@@ -421,9 +421,9 @@ const createGFilesInSalesforce = async (accessToken, instanceUrl, googleDriveBuc
     xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
     xhr.setRequestHeader('Content-Type', 'application/json');
 
-    // if(sfDeleteFile){
-    //   xhr.setRequestHeader('delete-salesforce-file', 'true');
-    // }
+    if(sfDeleteFile){
+      xhr.setRequestHeader('delete-salesforce-file', 'true');
+    }
 
     // Handle the response
     xhr.onload = function() {
@@ -533,7 +533,7 @@ app.get('/', async (req, res) => {
     try {
       // Replace these values with your own Salesforce Connected App credentials
 
-      const sfFileId = '00PDn00000PiszYMAR'; 
+      const sfFileId = '00PDn00000PixPAMAZ'; 
       const googleDriveAccessKey = '1037230251368-3drs8fpsj9tthlkko34r0t33mpujn7f9.apps.googleusercontent.com';// googleDriveClientId
       const googleDriveSecretKey = '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';
       const sfClientId = '3MVG9ux34Ig8G5eoXuY2kbtuBIdKdkDgMkWQ8821Y5RCUJbOySsRT7HixQAZYVVMGvz35Wbq8YFWBlCJjNo8r';
@@ -545,7 +545,7 @@ app.get('/', async (req, res) => {
       const sfContentDocumentId = null;
       const googleDriveFolderKey = null;//'Accounts/Test Account 1';
       const googleDriveFileTitle = 'S1234#.pdf';
-      const sfParentId = '001Dn00001B2b4uIAB';
+      const sfParentId = '001Dn000008oBFlIAM';
       const sfContentDocumentLinkId = null;
       const sfNamespace = '';
       const sfDeleteFile = false;
