@@ -591,6 +591,8 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
     // Authenticate with google
     const drive = google.drive({ version: 'v3', auth: authClient });
  
+    const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
+
     // Get meta tags
     var fileMetaTags = {};
       const metatype = 'google';
@@ -605,7 +607,6 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
           fileMetaTags[metaFieldAPI] = '';
       }
     });
-    const createFileMigrationLogResult = createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
 
     // Prepare metadata to store in google drive file
     const googleDriveFolderIds = [];
