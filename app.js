@@ -616,7 +616,7 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
               fileId: file.data.id,
               requestBody: {
                 role: 'reader',
-                type: 'xyz',
+                type: 'anyone',
               },
             });
           } catch (permissionError) {
