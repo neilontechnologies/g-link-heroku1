@@ -3,8 +3,8 @@ const cors = require('cors');
 const app = express();
 
 const fs = require('fs');
-const { Readable } = require('stream');
 const { google } = require('googleapis');
+const { Readable } = require('stream');
 
 const { OAuth2 } = google.auth;
 const SCOPE = ['https://www.googleapis.com/auth/drive'];
@@ -57,7 +57,6 @@ app.post('/uploadsalesforcefile', async (req, res) => {
       google_drive_folder_id
   } = req.body;
 
-
   // We are sending the request immediately because we cannot wait untill the whole migration is completed. It will timeout the API request in Apex.
   res.send(`Heroku service to migrate Salesforce File has been started successfully.`);
 
@@ -86,13 +85,21 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
   }
 
   // Get access token authetication with google drive
-  const googleDriveAccessToken = createOAuthClient(googleDriveAccessKey, googleDriveSecretKey, googleDriveRefreshToken); // TODO await, Create log
+  const googleDriveAccessToken = await createOAuthClient(googleDriveAccessKey, googleDriveSecretKey, googleDriveRefreshToken); // TODO await, Create log
+
+  if(googleDriveAccessToken == null){
+    const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
+  }
 
   // Check required parameters
   if(sfFileSize &&  sfFileId && (googleDriveFolderKey || sfParentId) && googleDriveFileTitle){
     // Get salesforce file information 
     const getSalesforceFileResult = await getSalesforceFile(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfNamespace, sfCreateLog);
 
+    if(getSalesforceFileResult == null){
+      const createFileMigrationLogResult = await createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'WORRKING', sfNamespace);
+    }
+    
     if(googleDriveFolderId != null){
       // Prepare google drive file path
       const googleDriveFilePath = googleDriveFolderKey + '/' + googleDriveFileTitle
@@ -517,14 +524,14 @@ const createFileMigrationLog = (accessToken, instanceUrl, sfFileId, sfContentDoc
         if (xhr.status === 200) {
           resolve(response);
         } else {
-          reject(new Error('Your request to create Salesforce Files Migration log in Salesforce failed. ERROR: ' + xhr.statusText));
+          //reject(new Error('Your request to create Salesforce Files Migration log in Salesforce failed. ERROR: ' + xhr.statusText));
         }
       }
     };
 
     // Handle network errors
     xhr.onerror = function(e) {
-      reject(new Error('Your request to create Salesforce Files Migration log in Salesforce failed. ERROR: ' + e));
+      //reject(new Error('Your request to create Salesforce Files Migration log in Salesforce failed. ERROR: ' + e));
     };
 
     // Send the request with the JSON body
@@ -533,7 +540,7 @@ const createFileMigrationLog = (accessToken, instanceUrl, sfFileId, sfContentDoc
 };
 
 // This function is used to create authentication with google drive
-function createOAuthClient(clientId, clientSecret, refreshToken) {
+async function createOAuthClient(clientId, clientSecret, refreshToken) {
   const oauth2Client = new OAuth2(clientId, clientSecret);
   oauth2Client.setCredentials({ refresh_token: refreshToken });
   return oauth2Client;
@@ -573,11 +580,9 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
       mimeType: gFile[sfNamespace + 'Content_Type__c'],
       properties: fileMetaTags
     };
-
-    // Create log
-    const bufferStream = new Readable();
-    bufferStream.push(buffer);
-    bufferStream.push(null);// TODO 
+    
+    // Create a readable stream from the buffer
+    const bufferStream = Readable.from(buffer);
 
     // Prepare media for google drive file
     const media = {
@@ -592,7 +597,7 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
         media,
         fields: 'id',
       },
-      (error, file) => {
+      async (error, file) => {
         if(error){
           // Check sf create log is true or false
           if(sfCreateLog){
@@ -605,27 +610,25 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
           return;
         }
 
-        // Add public permissions if required
-        if(gFile[sfNamespace + 'Public_On_Google__c']){
-            try {
-              drive.permissions.create({
-                fileId: file.data.id,
-                requestBody: {
-                    role: 'reader',
-                    type: 'anyone',// TODO invaid
-                },
-              });
-            } catch (permissionError){
-              // Prepare error message
-              const failureReason = 'Your request to make file public on Google Drive failed. ERROR: ' + permissionError;
+        if (gFile[sfNamespace + 'Public_On_Google__c']) {
+          try {
+            await drive.permissions.create({
+              fileId: file.data.id,
+              requestBody: {
+                role: 'reader',
+                type: 'xyz',
+              },
+            });
+          } catch (permissionError) {
+            const failureReason = 'Your request to make file public on Google Drive failed. ERROR: ' + permissionError;
 
-              // Check sf create log is true or false
-              if (sfCreateLog) {
-                // Create File Migration Logs
-                const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
-              }
-              return;
+            // Check sf create log is true or false
+            if (sfCreateLog) {
+              // Create File Migration Logs
+              const createFileMigrationLogResult =  createFileMigrationLog(accessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
             }
+            return;
+          }
         }
         resolve(file);
       }
@@ -637,7 +640,7 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
 app.get('/', async (req, res) => {
   try {
     // Replace these values with your own Salesforce Connected App credentials
-    const sfFileId = '00PDn00000PixSnMAJ'; 
+    const sfFileId = '00PDn00000PixXnMAJ'; 
     const googleDriveClientId = '1037230251368-3drs8fpsj9tthlkko34r0t33mpujn7f9.apps.googleusercontent.com';// googleDriveClientId
     const googleDriveClientSecretId = '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';
     const sfClientId = '3MVG9ux34Ig8G5eoXuY2kbtuBIdKdkDgMkWQ8821Y5RCUJbOySsRT7HixQAZYVVMGvz35Wbq8YFWBlCJjNo8r';
