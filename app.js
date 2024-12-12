@@ -1,8 +1,7 @@
-const express = require('express');// TODO
+const express = require('express');
 const cors = require('cors');
 const app = express();
 
-const fs = require('fs');
 const { google } = require('googleapis');
 const { Readable } = require('stream');
 
@@ -85,20 +84,16 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
   }
 
   // Get access token authetication with google drive
-  const googleDriveAccessToken = await createOAuthClient(googleDriveAccessKey, googleDriveSecretKey, googleDriveRefreshToken); // TODO await, Create log
+  const googleDriveAccessToken = await createOAuthClient(googleDriveAccessKey, googleDriveSecretKey, googleDriveRefreshToken);
 
-  if(googleDriveAccessToken == null){
-    const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'TEST', sfNamespace);
+  if(googleDriveAccessToken != null){
+    const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'ERROR', sfNamespace);
   }
 
   // Check required parameters
   if(sfFileSize &&  sfFileId && (googleDriveFolderKey || sfParentId) && googleDriveFileTitle){
     // Get salesforce file information 
     const getSalesforceFileResult = await getSalesforceFile(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfNamespace, sfCreateLog);
-
-    if(getSalesforceFileResult == null){
-      const createFileMigrationLogResult = await createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'WORRKING', sfNamespace);
-    }
     
     if(googleDriveFolderId != null){
       // Prepare google drive file path
@@ -110,7 +105,7 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
       // Check response
       if(response.status == 200){
         if(response && response.data && response.data.id){
-          // TODO comment
+          // Get google drive file id
           const googleDriveFileId = response.data.id;
 
           // Create g file record if file is successfully uploaded into google drive
@@ -137,7 +132,7 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
           // Check response
           if(response.status == 200){
             if(response && response.data && response.data.id){
-              // TODO comment
+              // Get google drive file id
               const googleDriveFileId = response.data.id;
 
               // Create g file record if file is successfully uploaded into google drive
@@ -149,14 +144,14 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
           const googleDriveFolderPath = getRecordHomeFolderResult.sObjects[0][sfNamespace + 'Bucket_Name__c'] + '/'+ getRecordHomeFolderResult.sObjects[0][sfNamespace + 'Google_Folder_Path__c'];
 
           // Create google drive folder busing google drive folder path
-          const {createGoogleDriveFolderResult1} = await createGoogleDriveFolder(salesforceAccessToken, instanceUrl, googleDriveFolderPath, sfFileId, sfContentDocumentLinkId, sfNamespace, sfCreateLog);
+          const {createGoogleDriveFolderResult} = await createGoogleDriveFolder(salesforceAccessToken, instanceUrl, googleDriveFolderPath, sfFileId, sfContentDocumentLinkId, sfNamespace, sfCreateLog);
           // TODO createGoogleDriveFolderResult
 
           //  Check response
-          if(createGoogleDriveFolderResult1 != null && createGoogleDriveFolderResult1.code == 200 && createGoogleDriveFolderResult1.data != null){
+          if(createGoogleDriveFolderResult != null && createGoogleDriveFolderResult.code == 200 && createGoogleDriveFolderResult.data != null){
 
             // Get google drive folder id
-            const googleDriveFolderId = createGoogleDriveFolderResult1.data.split('/').pop();
+            const googleDriveFolderId = createGoogleDriveFolderResult.data.split('/').pop();
 
             // Upload file in google drive
             const response = await uploadFileToGoogleDrive(googleDriveAccessToken, getSalesforceFileResult, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata);
@@ -164,7 +159,7 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
             // Check response
             if(response.status == 200){
               if(response && response.data && response.data.id){
-                // TODO comment
+                // Get google drive file id
                 const googleDriveFileId = response.data.id;
 
                 // Create g file record if file is successfully uploaded into google drive
@@ -173,9 +168,12 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
             }
           } else {
             // Prepare failure rason with error message of API
-            // TODO sfCreateLog
-            const failureReason = 'Your request to create Google Drive Folders failed. ERROR: ' + createGoogleDriveFolderResult1.message;
-            const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
+            const failureReason = 'Your request to create Google Drive Folders failed. ERROR: ' + createGoogleDriveFolderResult.message;
+            
+            if(sfCreateLog){
+              // Create File Migration Logs 
+              const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, failureReason, sfNamespace);
+            }
           }
         }
       } else{
@@ -195,14 +193,14 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
       const googleDriveFilePath = googleDriveFolderKey + '/' + googleDriveFileTitle
 
       // Create google drive folder using google drive folder path
-      const {createGoogleDriveFolderResult1} = await createGoogleDriveFolder(salesforceAccessToken, instanceUrl, googleDriveFolderPath, sfFileId, sfContentDocumentLinkId, sfNamespace, sfCreateLog);
-      // TODO createGoogleDriveFolderResult1
+      const {createGoogleDriveFolderResult} = await createGoogleDriveFolder(salesforceAccessToken, instanceUrl, googleDriveFolderPath, sfFileId, sfContentDocumentLinkId, sfNamespace, sfCreateLog);
+      // TODO createGoogleDriveFolderResult
 
       // Check folder is created or not
-      if(createGoogleDriveFolderResult1 != null && createGoogleDriveFolderResult1.code == 200 && createGoogleDriveFolderResult1.data != null){
+      if(createGoogleDriveFolderResult != null && createGoogleDriveFolderResult.code == 200 && createGoogleDriveFolderResult.data != null){
 
         // Get google drive folder id
-        const googleDriveFolderId = createGoogleDriveFolderResult1.data.split('/').pop();
+        const googleDriveFolderId = createGoogleDriveFolderResult.data.split('/').pop();
 
         // Upload file into google drive 
         const response = await uploadFileToGoogleDrive(googleDriveAccessToken, getSalesforceFileResult, googleDriveFolderId, googleDriveFileTitle, gFile, sfNamespace, salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, sfCreateLog, googleDriveFileMetadata);
@@ -210,7 +208,7 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
         // Check response
         if(response.status == 200){
           if(response && response.data && response.data.id){
-            // TODO comment
+            // Get google drive file id
             const googleDriveFileId = response.data.id;
 
             // Create g file record if file is successfully uploaded into google drive
@@ -381,7 +379,7 @@ const createGoogleDriveFolder = async (accessToken, instanceUrl, googleDriveFold
         console.log(response);
         if (xhr.status === 200) {
           resolve({
-            createGoogleDriveFolderResult1: response
+            createGoogleDriveFolderResult: response
           });  // Resolve the Promise on success
         } else {
           // Prepare failure rason with error message of API
