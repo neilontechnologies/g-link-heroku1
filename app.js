@@ -86,6 +86,7 @@ const migrateSalesforce = async (sfFileId, googleDriveAccessKey, googleDriveSecr
   // Get access token authetication with google drive
   const googleDriveAccessToken = await createOAuthClient(googleDriveAccessKey, googleDriveSecretKey, googleDriveRefreshToken);
 
+  // Check google access token is null or not
   if(googleDriveAccessToken == null){
     const createFileMigrationLogResult =  createFileMigrationLog(salesforceAccessToken, instanceUrl, sfFileId, sfContentDocumentLinkId, 'ERROR', sfNamespace);
   }
