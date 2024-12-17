@@ -1,1 +1,27 @@
-
+{
+  "name": "glink-heroku",
+  "description": "A description of your app",
+  "repository": "https://github.com/neilontechnologies/g-link-heroku1",
+  "logo": "https://www.neilontechnologies.com/public/frontend/images/Neilon.PNG", 
+  "keywords": [
+    "Salesforce",
+    "Heroku",
+    "Google APIs",
+    "API Integration",
+    "Authentication",
+    "Node.js",
+    "Express",
+    "Cloud Integration"
+  ],
+  "env": {
+    "API_KEY": {
+      "description": "Heroku API Key for Salesforce Authentication",
+      "required": false
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
