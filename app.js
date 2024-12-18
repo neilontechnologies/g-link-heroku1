@@ -637,34 +637,27 @@ async function uploadFileToGoogleDrive(authClient, buffer, googleDriveFolderId, 
 app.get('/', async (req, res) => {
   try {
     // Replace these values with your own Salesforce Connected App credentials
-    const sfFileId = '00PDn00000PixXnMAJ'; 
-    const googleDriveClientId = '1037230251368-3drs8fpsj9tthlkko34r0t33mpujn7f9.apps.googleusercontent.com';// googleDriveClientId
-    const googleDriveClientSecretId = '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';
-    const sfClientId = '3MVG9ux34Ig8G5eoXuY2kbtuBIdKdkDgMkWQ8821Y5RCUJbOySsRT7HixQAZYVVMGvz35Wbq8YFWBlCJjNo8r';
-    const sfClientSecret = 'E31DAAE4899949167FDD3849E01664AFC31A3F69D385D0DF7A2DCAC4E6DF9AC5';
-    const sfUsername = 'neilon@glinkdev.com';
-    const sfPassword = 'glink4321!HHLA0xCqxEgM5T7FtOW4ddaV4';
-    const googleDriveBucketName = 'glink-test-org';
-    const sfFileSize = 630189;
-    const sfContentDocumentId = null;
-    const googleDriveFolderKey = null;//'Accounts/Test Account 1';
-    const googleDriveFileTitle = 'S1234#.pdf';
-    const sfParentId = '001Dn000008oBFlIAM';
-    const sfContentDocumentLinkId = null;
-    const sfNamespace = '';
-    const sfDeleteFile = false;
-    const sfCreateLog = true;
-    const gFile = {
-      [sfNamespace + 'Content_Type__c']: 'application/pdf',
-      [sfNamespace + 'Public_On_Google__c']: true
-    }
-    const googleDriveFileMetadata = 
-      {
-      'contentDocumentId': '069Dn00000EpOtNIAV',
-      'Title': 'ABC'
-      };
-    const googleDriveRefreshToken = '1//04n3KtQAnVLNICgYIARAAGAQSNwF-L9Ir9hipRxW4KrmQgNkjj44b3T1-cfc10FEVlwaDUJp6K4jqYJFdxPJ-ucMHp1wbMzqe8FU';
-    const googleDriveFolderId = null;
+    const sfFileId = '{SALESFORCE_CONTENT_VERSION_ID}'; 
+    const googleDriveClientId = '{GOOGLE_DRIVE_CLIENT_ID}';
+    const googleDriveClientSecretId = '{GOOGLE_DRIVE_CLIENT_SECRET_ID}';
+    const sfClientId = '{SALESFORCE_CLIENT_ID}';
+    const sfClientSecret = '{SALESFORCE_CLIENT_SECRET_KEY}';
+    const sfUsername = '{SALESFORCE_USERNAME}';
+    const sfPassword = '{SALESFORCE_PASSWORD}';
+    const googleDriveBucketName = '{GOOGLE_DRIVE_BUCKET_NAME}';
+    const sfFileSize = '{SALESFORCE_FILE_SIZE}';
+    const sfContentDocumentId = '{SALESFORCE_CONTENT_DOCUMENT_ID}';
+    const googleDriveFolderKey = '{GOOGLE_DRIVE_FOLDER_KEY}'
+    const googleDriveFileTitle = 'GOOGLE_DRIVE_FILE_TITLE';
+    const sfParentId = '{SALESFORCE_PARENT_ID}';
+    const sfContentDocumentLinkId = '{SALESFORCE_CONTENT_DOCUMENT_LINK_ID}';
+    const sfNamespace = '{SALESFORCE_NAMESPACE}';
+    const sfDeleteFile = '{SALESFORCE_DELETE_FILE}';
+    const sfCreateLog = '{SALESFORCE_CREATE_LOG}';
+    const gFile = '{G_FILE}';
+    const googleDriveFileMetadata = '{GOOGLE_DRIVE_FILE_METADATA}';
+    const googleDriveRefreshToken = '{GOOGLE_DRIVE_REFRESH_TOKEN}';
+    const googleDriveFolderId = '{GOOGLE_DRIVE_FOLDER_ID}';
 
     // We are sending the request immediately because we cannot wait untill the whole migration is completed. It will timeout the API request in Apex.
     res.send(`Heroku service to migrate Salesforce File has been started successfully.`);
