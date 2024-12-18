@@ -1,7 +1,7 @@
 {
   "name": "glink-heroku",
   "description": "A description of your app",
-  "repository": "https://github.com/neilontechnologies/g-link-heroku1",
+  "repository": "https://github.com/neilontechnologies/g-link-heroku",
   "logo": "https://www.neilontechnologies.com/public/frontend/images/Neilon.PNG", 
   "keywords": [
     "Salesforce",
